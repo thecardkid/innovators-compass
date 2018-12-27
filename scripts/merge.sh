@@ -15,7 +15,7 @@ cat <<EOF >&2
 about to squash merge branch "$curr_branch" into develop with the following commit message:
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Merge branch \"$curr_branch\"
+Merge branch "$curr_branch"
 
 $commit_messages
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
