@@ -9,4 +9,5 @@ fi
 
 git checkout test-branch
 git merge --squash "$curr_branch"
-git commit
+commit_messages="$(git log --format=%B --reverse develop..${curr_branch})"
+git commit -m "Merge branch $curr_branch with commits:" -m "$commit_messages"
