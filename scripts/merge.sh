@@ -38,7 +38,7 @@ if [[ ! -z "$status" ]]; then
 fi
 
 echo "committing..." >&2
-git checkout test-branch
+git checkout develop
 git merge --squash "$curr_branch"
 git commit -m "Merge branch \"$curr_branch\"" -m "$commit_messages"
 
