@@ -7,8 +7,6 @@ if [[ "$curr_branch" == "develop" ]]; then
     exit 1
 fi
 
-git checkout test-branch
-git merge --squash "$curr_branch"
 commit_messages="$(git log --format=%B --reverse develop..${curr_branch})"
 
 cat <<EOF >&2
@@ -21,6 +19,9 @@ Merge branch \"$curr_branch\"
 
 $commit_messages
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
 EOF
 sleep 2
 
@@ -31,6 +32,8 @@ if [[ $input != "y" && $input != "Y" ]]; then
 fi
 
 echo "committing..." >&2
+git checkout test-branch
+git merge --squash "$curr_branch"
 git commit -m "Merge branch \"$curr_branch\"" -m "$commit_messages"
 
 git status
