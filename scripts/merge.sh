@@ -23,7 +23,6 @@ $commit_messages
 
 
 EOF
-sleep 1
 
 read -p "Continue? [y/N] " input >&2
 if [[ $input != "y" && $input != "Y" ]]; then
@@ -32,7 +31,8 @@ if [[ $input != "y" && $input != "Y" ]]; then
 fi
 
 # check branch is not dirty
-if [[ -z $(git status -s) ]]; then
+status="$(git status -s)"
+if [[ ! -z "$status" ]]; then
     echo "aborting, git branch is dirty" >&2
     exit 1
 fi
