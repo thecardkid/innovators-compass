@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Tappable from 'react-tappable/lib/Tappable';
 import { bindActionCreators } from 'redux';
 
 import ModalSingleton from '../../utils/Modal';
@@ -27,21 +28,27 @@ class ModesSubmenu extends Component {
     return (
       <div className={'ic-menu ic-modes-submenu'}>
         <section className={'border-bottom'}>
-          <div id={'ic-standard'} className={'ic-menu-item'} onClick={this.props.changeMode('standard')}>
-            <span className={normal ? 'active' : 'inactive'} />
-            Standard
-            <span className={'ic-shortcut'}>shift+1</span>
-          </div>
-          <div id={'ic-compact'} className={'ic-menu-item'} onClick={this.props.changeMode('compact')}>
-            <span className={compact ? 'active' : 'inactive'} />
-            Compact
-            <span className={'ic-shortcut'}>shift+2</span>
-          </div>
-          <div id={'ic-bulk'} className={'ic-menu-item'} onClick={this.props.changeMode('bulk')}>
-            <span className={bulk ? 'active' : 'inactive'} />
-            Bulk Edit
-            <span className={'ic-shortcut'}>shift+click</span>
-          </div>
+          <Tappable onTap={this.props.changeMode('standard')}>
+            <div id={'ic-standard'} className={'ic-menu-item'} onClick={this.props.changeMode('standard')}>
+              <span className={normal ? 'active' : 'inactive'} />
+              Standard
+              <span className={'ic-shortcut'}>shift+1</span>
+            </div>
+          </Tappable>
+          <Tappable onTap={this.props.changeMode('compact')}>
+            <div id={'ic-compact'} className={'ic-menu-item'} onClick={this.props.changeMode('compact')}>
+              <span className={compact ? 'active' : 'inactive'} />
+              Compact
+              <span className={'ic-shortcut'}>shift+2</span>
+            </div>
+          </Tappable>
+          <Tappable onTap={this.props.changeMode('bulk')}>
+            <div id={'ic-bulk'} className={'ic-menu-item'} onClick={this.props.changeMode('bulk')}>
+              <span className={bulk ? 'active' : 'inactive'} />
+              Bulk Edit
+              <span className={'ic-shortcut'}>shift+click</span>
+            </div>
+          </Tappable>
         </section>
         <section>
           <div className={'ic-menu-item'} onClick={this.alertExplainModes}>

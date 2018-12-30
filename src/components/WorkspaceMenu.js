@@ -2,6 +2,7 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import Tappable from 'react-tappable/lib/Tappable';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 
@@ -247,18 +248,24 @@ class WorkspaceMenu extends Component {
           </div>
         </section>
         <section className={'border-bottom'}>
-          <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('notes')}>
-            Add Note
-            {notes && <NotesSubmenu uiX={this.props.uiX} hideMenu={this.hideMenu}/>}
-          </div>
-          <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('modes')}>
-            Change Mode
-            {modes && <ModesSubmenu modes={this.props.modes} changeMode={this.buttonChangeMode} hideMenu={this.hideMenu}/>}
-          </div>
-          <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('users')}>
-            Collaborators
-            {users && this.renderUsersSubmenu()}
-          </div>
+          <Tappable onTap={this.showSubmenu('notes')}>
+            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('notes')}>
+              Add Note
+              {notes && <NotesSubmenu uiX={this.props.uiX} hideMenu={this.hideMenu}/>}
+            </div>
+          </Tappable>
+          <Tappable onTap={this.showSubmenu('modes')}>
+            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('modes')}>
+              Change Mode
+              {modes && <ModesSubmenu modes={this.props.modes} changeMode={this.buttonChangeMode} hideMenu={this.hideMenu}/>}
+            </div>
+          </Tappable>
+          <Tappable onTap={this.showSubmenu('users')}>
+            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('users')}>
+              Collaborators
+              {users && this.renderUsersSubmenu()}
+            </div>
+          </Tappable>
         </section>
         <section onMouseEnter={this.hideSubmenus}>
           <div className={'ic-menu-item'} onClick={this.logout}>
@@ -323,7 +330,6 @@ const mapStateToProps = (state) => {
       normal: state.ui.editingMode === EDITING_MODE.NORMAL || false,
       compact: state.ui.editingMode === EDITING_MODE.COMPACT || false,
       bulk: state.ui.editingMode === EDITING_MODE.VISUAL || false,
-      draft: state.ui.editingMode === EDITING_MODE.DRAFT || false,
     },
     hasDrafts: (state.workspace.drafts || []).length > 0,
   };

@@ -8,7 +8,7 @@
     "watch": "webpack -d --config ./config/webpack/dev.js",
     "build": "webpack --config ./config/webpack/prod.js",
     "vendor": "webpack --config ./config/webpack/vendor.js",
-    "start": "./scripts/run.sh",
+    "start": "source ./runner.sh && nodemon icompass.js",
     "start-server": "npm run build && node icompass.js",
     "lint": "./node_modules/.bin/eslint --config config/.eslintrc.js src/ test/ lib/ models/ --ignore-pattern=*.less --quiet",
     "mocha": "mocha --require @babel/register --timeout 120000 --exit test/server",
