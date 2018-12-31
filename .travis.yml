@@ -52,7 +52,7 @@ jobs:
     - docker-compose -f docker/compose.yml up --detach
     - sleep 15s # Wait for docker-compose to start app
     - npm run mocha
-    - npm run wdio
+    - scripts/wdio --skip-webpack
   - stage: deploy master
     if: branch = master
     script:
