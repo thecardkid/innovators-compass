@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import Tappable from 'react-tappable/lib/Tappable';
 import { bindActionCreators } from 'redux';
 
 import * as uiX from '../actions/ui';
@@ -13,6 +12,9 @@ import BookmarkList from '../components/BookmarkList.jsx';
 import Modal from '../utils/Modal';
 import Socket from '../utils/Socket.js';
 import Toast from '../utils/Toast';
+
+import MaybeTappable from '../utils/MaybeTappable';
+import DevOnly from '../utils/DevOnly';
 
 import { REGEX } from '../../lib/constants';
 
@@ -52,6 +54,14 @@ class LandingPage extends Component {
     this.setState({ data });
   };
 
+  onAutomatedCompassReady = (data) => {
+    if (!data.success) {
+      return this.toast.error('Failed to create workspace. Check logs');
+    }
+
+    return browserHistory.push(`/compass/edit/${data.code}/${this.state.username}`);
+  };
+
   validateMakeInput = (e) => {
     e.preventDefault();
 
@@ -65,6 +75,20 @@ class LandingPage extends Component {
     this.setState({ username });
     this.socket.emitCreateCompass(topic, username);
     this.socket.emitMetricLandingPage(this.start, Date.now(), 'create');
+  };
+
+  automateSetup = (e) => {
+    e.preventDefault();
+
+    const topic = 'test-topic';
+    const username = 'testuser';
+
+    this.setState({ username });
+
+    this.socket.subscribe({
+      'automated compass ready': this.onAutomatedCompassReady,
+    });
+    this.socket.emitAutomatedCreateCompass(topic, username);
   };
 
   promptForEmail = () => {
@@ -111,9 +135,9 @@ class LandingPage extends Component {
   render() {
     return (
       <div id={'ic-landing'}>
-        <Tappable onTap={this.toast.clear}>
-          <div id="ic-toast" onClick={this.toast.clear} />
-        </Tappable>
+        <MaybeTappable handleTapOrClick={this.toast.clear}>
+          <div id={'ic-toast'}/>
+        </MaybeTappable>
         <img src={'https://s3.us-east-2.amazonaws.com/innovatorscompass/landing.jpg'} className={'ic-background'} style={this.sizeImage()}/>
         <BookmarkList start={this.start}/>
         <div id={'ic-landing-container'}>
@@ -133,10 +157,15 @@ class LandingPage extends Component {
                      maxLength={15}
                      required />
               <br/>
-              <button type="submit">
+              <button type={'submit'} id={'user-submit'}>
                 Get started
                 <i className="material-icons">arrow_forward</i>
               </button>
+              <DevOnly>
+                <button className={'automate-workspace-setup'} onClick={this.automateSetup}>
+                  Automate Setup (only shown in development)
+                </button>
+              </DevOnly>
             </form>
           </div>
           <a href={'https://youtu.be/3IbxFHQ5Dxo'} className={'ic-guide'}>

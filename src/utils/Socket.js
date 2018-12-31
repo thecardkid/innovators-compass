@@ -108,6 +108,12 @@ const SocketSingleton = (() => {
       }
     };
 
+    emitAutomatedCreateCompass = (topic, username) => {
+      if (this.checkConnected()) {
+        this.socket.emit('automated create compass', { topic, username });
+      }
+    };
+
     emitSendMail = (code, username, receiverEmail) => {
       if (this.checkConnected()) {
         this.socket.emit('send mail', {

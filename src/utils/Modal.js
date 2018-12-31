@@ -244,7 +244,7 @@ const ModalSingleton = (() => {
       return this._prompt(html, cb);
     }
 
-    promptForCenter(warn, cb) {
+    promptForCenter(warnFunc, cb) {
       const html = this.getModalHtml(
         `<h3>1. Who\'s involved, including you?</h3>
          <input id="ic-modal-input" />
@@ -253,6 +253,9 @@ const ModalSingleton = (() => {
       );
       $('#ic-modal-container').empty().append(html);
       $('#ic-modal-input').focus();
+      if (__DEV__) {
+        $('#ic-modal-input').val('topic-autofilled').select();
+      }
       this.addBackdropIfNecessary();
       this.show = true;
 
@@ -260,14 +263,14 @@ const ModalSingleton = (() => {
       $('#ic-modal-confirm').on('click', () => {
         response = $('#ic-modal-input').val();
         if (!response) {
-          warn('You can\'t leave this empty');
+          warnFunc('You can\'t leave this empty');
         } else {
           this.close();
           cb(response);
         }
       });
-      $('#ic-modal-cancel').on('click', () => warn('You need to complete this action'));
-      $('#ic-backdrop').on('click', () => warn('You need to complete this action'));
+      $('#ic-modal-cancel').on('click', () => warnFunc('You need to complete this action'));
+      $('#ic-backdrop').on('click', () => warnFunc('You need to complete this action'));
     }
 
     editCenter(currentVal, cb) {

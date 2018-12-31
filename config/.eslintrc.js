@@ -9,6 +9,9 @@ module.exports = {
     'webdriverio/wdio': true,
     'es6': true,
   },
+  globals: {
+    __DEV__: true,
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',

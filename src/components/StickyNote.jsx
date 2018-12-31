@@ -379,7 +379,7 @@ class StickyNote extends Component {
       style = {
         left: n.x * this.props.ui.vw,
         top: n.y * this.props.ui.vh,
-        // from src/css/zIndex.less
+        // from src/css/z-indices.less
         zIndex: i === this.props.ui.focusedNote ? 3 : 2,
       };
 

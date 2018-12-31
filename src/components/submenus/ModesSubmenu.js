@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import ModalSingleton from '../../utils/Modal';
 import SocketSingleton from '../../utils/Socket';
-import MaybeTappable from '../../utils/MaybeTappable.jsx';
+import MaybeTappable from '../../utils/MaybeTappable';
 
 import * as uiX from '../../actions/ui';
 

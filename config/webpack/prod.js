@@ -18,8 +18,8 @@ const prodConfig = () => merge(
     mode: 'production',
     plugins: [
       new webpack.DefinePlugin({
+        __DEV__: false,
         'process.env': {
-          __DEV__: false,
           HOST: JSON.stringify(getHost()),
           S3_URL: JSON.stringify(`https://s3.us-east-2.amazonaws.com/${getS3BucketName()}`),
         }
