@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import ModalSingleton from '../../utils/Modal';
 import SocketSingleton from '../../utils/Socket';
+import MaybeTappable from '../../utils/MaybeTappable.jsx';
 
 import * as uiX from '../../actions/ui';
 
@@ -28,27 +29,27 @@ class ModesSubmenu extends Component {
     return (
       <div className={'ic-menu ic-modes-submenu'}>
         <section className={'border-bottom'}>
-          <Tappable onTap={this.props.changeMode('standard')}>
-            <div id={'ic-standard'} className={'ic-menu-item'} onClick={this.props.changeMode('standard')}>
+          <MaybeTappable handleTapOrClick={this.props.changeMode('standard')}>
+            <div id={'ic-standard'} className={'ic-menu-item'}>
               <span className={normal ? 'active' : 'inactive'} />
               Standard
               <span className={'ic-shortcut'}>shift+1</span>
             </div>
-          </Tappable>
-          <Tappable onTap={this.props.changeMode('compact')}>
-            <div id={'ic-compact'} className={'ic-menu-item'} onClick={this.props.changeMode('compact')}>
+          </MaybeTappable>
+          <MaybeTappable handleTapOrClick={this.props.changeMode('compact')}>
+            <div id={'ic-compact'} className={'ic-menu-item'}>
               <span className={compact ? 'active' : 'inactive'} />
               Compact
               <span className={'ic-shortcut'}>shift+2</span>
             </div>
-          </Tappable>
-          <Tappable onTap={this.props.changeMode('bulk')}>
-            <div id={'ic-bulk'} className={'ic-menu-item'} onClick={this.props.changeMode('bulk')}>
+          </MaybeTappable>
+          <MaybeTappable handleTapOrClick={this.props.changeMode('bulk')}>
+            <div id={'ic-bulk'} className={'ic-menu-item'}>
               <span className={bulk ? 'active' : 'inactive'} />
               Bulk Edit
               <span className={'ic-shortcut'}>shift+click</span>
             </div>
-          </Tappable>
+          </MaybeTappable>
         </section>
         <section>
           <div className={'ic-menu-item'} onClick={this.alertExplainModes}>

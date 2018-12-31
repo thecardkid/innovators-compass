@@ -5,9 +5,10 @@ chai.use(chaiWebdriver(browser));
 const expect = chai.expect;
 const b = browser;
 
-const { setup, cleanup, switchMode } = require('./utils');
+const { setup, cleanup, menuActions, selectSubmenuOption } = require('./utils');
 
 const expectNumUsers = (expected) => {
+  // TODO refactor this using submenuActions
   b.click('button.ic-workspace-button');
   b.waitForVisible('div.ic-workspace-menu');
   b.moveTo(b.elements('div.has-more').value[2].ELEMENT, 10, 10);
@@ -155,13 +156,13 @@ describe('collaboration', () => {
   describe('bulk edit mode', () => {
     it('deleting a note that is being edited by a user removes it from that user\'s screen', () => {
       b.switchTab(tabs.webdriverio);
-      switchMode('#ic-bulk');
+      selectSubmenuOption(menuActions.bulkMode);
       b.waitForVisible('#ic-visual-toolbar');
       b.click('#note0');
       b.click('#note2');
 
       b.switchTab(tabs.friendo);
-      switchMode('#ic-bulk');
+      selectSubmenuOption(menuActions.bulkMode);
       b.waitForVisible('#ic-visual-toolbar');
       b.click('#note2');
       b.click('#ic-bulk-delete');
@@ -183,7 +184,6 @@ describe('collaboration', () => {
     it('user who performs delete action gets redirected to home page', () => {
       b.switchTab(tabs.webdriverio);
       cleanup();
-      b.pause(500);
       expect(b.getUrl()).to.equal('http://localhost:8080/');
     });
 

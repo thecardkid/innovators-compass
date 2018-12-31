@@ -79,6 +79,7 @@ class WorkspaceMenu extends Component {
         return this.props.uiX.visualMode(this.props.notes.length);
 
       default:
+        this.hideMenu();
         return;
     }
   };
@@ -180,6 +181,9 @@ class WorkspaceMenu extends Component {
 
   showSubmenu = (submenu) => () => {
     this.setState({ submenus: {
+      notes: false,
+      modes: false,
+      users: false,
       [submenu]: true,
     }});
   };
