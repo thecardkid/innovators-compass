@@ -13,7 +13,7 @@
     "lint": "./node_modules/.bin/eslint --config config/.eslintrc.js src/ test/ lib/ models/ --ignore-pattern=*.less --quiet",
     "mocha": "mocha --require @babel/register --timeout 120000 --exit test/server",
     "api": "mocha --require @babel/register --exit test/api",
-    "test": "export NODE_ENV=test && npm run test:mocha && node test/e2e",
+    "test": "export NODE_ENV=test && npm run test:mocha && node test/e2e"
   },
   "author": "Hieu Nguyen",
   "license": "ISC",
