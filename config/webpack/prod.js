@@ -4,6 +4,14 @@ const merge = require('webpack-merge');
 const commonConfig = require('./common');
 const { compressionPlugin, uglifyJsPlugin } = require('./parts');
 
+function getHost() {
+  return process.env.HOST || 'https://icompass.me';
+}
+
+function getS3BucketName() {
+  return process.env.S3_BUCKET || 'innovatorscompass';
+}
+
 const prodConfig = () => merge(
   commonConfig(),
   {
@@ -11,8 +19,9 @@ const prodConfig = () => merge(
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          HOST: JSON.stringify(process.env.HOST || 'https://icompass.me'),
-          S3_URL: JSON.stringify(`https://s3.us-east-2.amazonaws.com/${process.env.S3_BUCKET || 'innovatorscompass'}`),
+          __DEV__: false,
+          HOST: JSON.stringify(getHost()),
+          S3_URL: JSON.stringify(`https://s3.us-east-2.amazonaws.com/${getS3BucketName()}`),
         }
       }),
       new webpack.optimize.ModuleConcatenationPlugin(),
