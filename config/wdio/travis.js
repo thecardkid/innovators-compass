@@ -40,7 +40,7 @@ exports.config = {
       if (passed) {
         return;
       }
-      const fp = `errorShots/${i++}.png`;
+      const fp = `tools/travis-wdio-reporter/s3-static/images/${i++}.png`;
       browser.saveScreenshot(fp);
       ErrorReporterSingleton.getInstance().enqueueErrorSreenshot({
         filename: fp,
@@ -52,7 +52,8 @@ exports.config = {
     ErrorReporterSingleton.getInstance().maybeAddTestFailure(test);
   },
   after: function (result, capabilities, specs) {
-    if (result === 1) {
+    // result is how many tests failed
+    if (result > 0) {
       ErrorReporterSingleton.getInstance().report();
     }
   },
@@ -101,7 +102,7 @@ const ErrorReporterSingleton = (function() {
     },
 
     report: function() {
-      jsonfile.writeFileSync(path.resolve(__dirname, '../../tools/travis-wdio-reporter/' + /* TODO */ 'data.json'), this.errors);
+      jsonfile.writeFileSync('tools/travis-wdio-reporter/' + /* TODO */ 'data.json', this.errors);
     },
   };
 
