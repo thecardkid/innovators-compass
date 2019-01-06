@@ -8,7 +8,7 @@ const { expect } = chai;
 const { STICKY_COLORS } = require('../../lib/constants');
 
 const setup = () => {
-  browser.setViewportSize({ width: 2000, height: 2000 });
+  browser.setViewportSize({ width: 2000, height: 1333 });
   browser.url('http://localhost:8080');
   browser.waitForVisible('body', 1000);
   // TODO compass-center is legacy (from before "topic" existed).
