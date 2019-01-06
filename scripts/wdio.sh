@@ -12,7 +12,7 @@ while [[ $# -gt 0 ]]; do
             WEBPACK=1
             ;;
 
-        --only|-o)
+        --only|-o|--spec|-s)
             SPEC_FILE="$2"
             if [[ ! -e "$IC_ROOT/test/e2e/$SPEC_FILE.spec.js" ]]; then
                 echo "The specified test file test/e2e/$SPEC_FILE.spec.js does not exist" >&2
@@ -56,9 +56,10 @@ until $(curl --output /dev/null --silent --head --fail "http://localhost:8080");
 done
 echo "iCompass server detected"
 
-echo "clearing errorShots/folder"
 if [[ -d "$IC_ROOT/errorShots" ]]; then
+    echo "clearing errorShots/ folder"
     rm -r "$IC_ROOT/errorShots/"
+    mkdir "$IC_ROOT/errorShots/"
 fi
 
 echo ""

@@ -32,103 +32,33 @@ exports.config = {
   framework: 'jasmine',
   jasmineNodeOpts: {
     defaultTimeoutInterval: 100000,
-    expectationResultHandler: (function() {
-      let i = 0;
+    expectationResultHandler: function(passed, assertion) {
+      // { matcherName: '',
+      //   passed: false,
+      //   expected: '',
+      //   actual: '',
+      //   message: 'Failed: Expected element <#ic-modal-body> to contain text "/Innovator\'s Coimpass/", but only found: The Innovator\'s Compass\nStarting something or feeling stuck? Use five questions, aske',
+      //     For more information, visit innovatorscompass.org.
+      //     at UserContext.it (/Users/hieunguyen/dev/icompass/test/e2e/help.spec.js:36:38)
+      //     at new Promise (<anonymous>)
+      //     at new F (/Users/hieunguyen/dev/icompass/node_modules/core-js/library/modules/_export.js:36:28)
+      //     message: 'Expected element <#ic-modal-body> to contain text "/Innovator\'s Coimpass/", but only found: The Innovator\'s Compass\nStarting something or feeling stuck? Use five questions, asked by all kinds of innovators, to make things better.\nExplore anything you\'re doing, alone or with others. You\'ll see challenges in new ways.\n1. PEOPLE: Who could be involved? ...including you? For and with everyone involved, explore...\n2. OBSERVATIONS: What\'s happening? Why? What are people doing? Saying? Thinking? Feeling? Why? See all sides, ups and downs.\n3. PRINCIPLES: What matters most for everyone involved? Principles often compete - inspiring us to get creative!\n4. IDEAS: What ways are there? Anyone and anything can help. Look around for ideas! Play with who/what/when/where/how.\n5. EXPERIMENTS: What\'s a step to try? With little time/risk/cost? Do it! What happens for all involved (#1 & 2)?\nReally explore. Look, listen, feel; use words, draw, move, make. In this order (P.O.P.I.E.) or any way that moves you forward.\nFor more information, visit innovatorscompass.org.',
+      //     showDiff: false,
+      //     actual: '#ic-modal-body',
+      //     expected: undefined } }
+      if (passed) {
+        return;
+      }
 
-      return function(passed) {
-        if (!passed) {
-          browser.saveScreenshot(`errorShots/${i++}.png`);
-        }
-      };
-    })(),
+      console.log(assertion);
+      // const cleaned = assertion.to
+      // if (!passed) {
+      //   browser.saveScreenshot(`tools/travis-wdio-reporter/failures/${i++}.png`);
+      // }
+    },
   },
 
-  //
-  // =====
   // Hooks
-  // =====
-  // WebdriverIO provides several hooks you can use to interfere with the test process in order to enhance
-  // it and to build services around it. You can either apply a single function or an array of
-  // methods to it. If one of them returns with a promise, WebdriverIO will wait until that promise got
-  // resolved to continue.
-  /**
-   * Gets executed once before all workers get launched.
-   * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
-   */
-  // onPrepare: function (config, capabilities) {
-  // },
-  /**
-   * Gets executed just before initialising the webdriver session and test framework. It allows you
-   * to manipulate configurations depending on the capability or spec.
-   * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
-   * @param {Array.<String>} specs List of spec file paths that are to be run
-   */
-  // beforeSession: function (config, capabilities, specs) {
-  // },
-  /**
-   * Gets executed before test execution begins. At this point you can access to all global
-   * variables like `browser`. It is the perfect place to define custom commands.
-   * @param {Array.<Object>} capabilities list of capabilities details
-   * @param {Array.<String>} specs List of spec file paths that are to be run
-   */
-  // before: function (capabilities, specs) {
-  // },
-  /**
-   * Runs before a WebdriverIO command gets executed.
-   * @param {String} commandName hook command name
-   * @param {Array} args arguments that command would receive
-   */
-  // beforeCommand: function (commandName, args) {
-  // },
-
-  /**
-   * Hook that gets executed before the suite starts
-   * @param {Object} suite suite details
-   */
-  // beforeSuite: function (suite) {
-  // },
-  /**
-   * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-   * @param {Object} test test details
-   */
-  // beforeTest: function (test) {
-  // },
-  /**
-   * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
-   * beforeEach in Mocha)
-   */
-  // beforeHook: function () {
-  // },
-  /**
-   * Hook that gets executed _after_ a hook within the suite ends (e.g. runs after calling
-   * afterEach in Mocha)
-   */
-  // afterHook: function () {
-  // },
-  /**
-   * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
-   * @param {Object} test test details
-   */
-  // afterTest: function (test) {
-  // },
-  /**
-   * Hook that gets executed after the suite has ended
-   * @param {Object} suite suite details
-   */
-  // afterSuite: function (suite) {
-  // },
-
-  /**
-   * Runs after a WebdriverIO command gets executed
-   * @param {String} commandName hook command name
-   * @param {Array} args arguments that command would receive
-   * @param {Number} result 0 - command success, 1 - command error
-   * @param {Object} error error object if any
-   */
-  // afterCommand: function (commandName, args, result, error) {
-  // },
   /**
    * Gets executed after all tests are done. You still have access to all global variables from
    * the test.
@@ -152,6 +82,9 @@ exports.config = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onComplete: function(exitCode, config, capabilities) {
-  // }
+  onComplete: function(exitCode, config, capabilities) {
+    if (exitCode === 1) {
+
+    }
+  }
 };
