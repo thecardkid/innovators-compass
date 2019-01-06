@@ -1,6 +1,3 @@
-const jsonfile = require('jsonfile');
-const path = require('path');
-
 const userAgent = require('./useragent');
 
 const headlessArgs = ['--headless', '--disable-gpu'];

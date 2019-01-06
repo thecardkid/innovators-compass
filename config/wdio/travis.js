@@ -1,3 +1,6 @@
+const jsonfile = require('jsonfile');
+const path = require('path');
+
 const userAgent = require('./useragent');
 
 let i = 0;
@@ -35,7 +38,7 @@ exports.config = {
     defaultTimeoutInterval: 100000,
     expectationResultHandler: function(passed, assertion) {
       if (passed) {
-        return
+        return;
       }
       const fp = `errorShots/${i++}.png`;
       browser.saveScreenshot(fp);
