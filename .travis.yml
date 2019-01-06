@@ -54,6 +54,7 @@ jobs:
     - sleep 15s
     - npm run mocha
     - ./scripts/wdio-travis.sh
+    - cat tools/travis-wdio-reporter/data.json
   - stage: deploy master
     if: branch = master
     script:

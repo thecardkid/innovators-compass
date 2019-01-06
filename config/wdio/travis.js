@@ -1,5 +1,6 @@
 const userAgent = require('./useragent');
 
+let i = 0;
 exports.config = {
   specs: [
     './test/e2e/*.spec.js',
@@ -33,58 +34,84 @@ exports.config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 100000,
     expectationResultHandler: function(passed, assertion) {
-      // { matcherName: '',
-      //   passed: false,
-      //   expected: '',
-      //   actual: '',
-      //   message: 'Failed: Expected element <#ic-modal-body> to contain text "/Innovator\'s Coimpass/", but only found: The Innovator\'s Compass\nStarting something or feeling stuck? Use five questions, aske',
-      //     For more information, visit innovatorscompass.org.
-      //     at UserContext.it (/Users/hieunguyen/dev/icompass/test/e2e/help.spec.js:36:38)
-      //     at new Promise (<anonymous>)
-      //     at new F (/Users/hieunguyen/dev/icompass/node_modules/core-js/library/modules/_export.js:36:28)
-      //     message: 'Expected element <#ic-modal-body> to contain text "/Innovator\'s Coimpass/", but only found: The Innovator\'s Compass\nStarting something or feeling stuck? Use five questions, asked by all kinds of innovators, to make things better.\nExplore anything you\'re doing, alone or with others. You\'ll see challenges in new ways.\n1. PEOPLE: Who could be involved? ...including you? For and with everyone involved, explore...\n2. OBSERVATIONS: What\'s happening? Why? What are people doing? Saying? Thinking? Feeling? Why? See all sides, ups and downs.\n3. PRINCIPLES: What matters most for everyone involved? Principles often compete - inspiring us to get creative!\n4. IDEAS: What ways are there? Anyone and anything can help. Look around for ideas! Play with who/what/when/where/how.\n5. EXPERIMENTS: What\'s a step to try? With little time/risk/cost? Do it! What happens for all involved (#1 & 2)?\nReally explore. Look, listen, feel; use words, draw, move, make. In this order (P.O.P.I.E.) or any way that moves you forward.\nFor more information, visit innovatorscompass.org.',
-      //     showDiff: false,
-      //     actual: '#ic-modal-body',
-      //     expected: undefined } }
       if (passed) {
-        return;
+        return
       }
-
-      console.log(assertion);
-      // const cleaned = assertion.to
-      // if (!passed) {
-      //   browser.saveScreenshot(`tools/travis-wdio-reporter/failures/${i++}.png`);
-      // }
+      const fp = `errorShots/${i++}.png`;
+      browser.saveScreenshot(fp);
+      ErrorReporterSingleton.getInstance().enqueueErrorSreenshot({
+        filename: fp,
+        errorMessage: assertion.message,
+      });
     },
   },
-
-  // Hooks
-  /**
-   * Gets executed after all tests are done. You still have access to all global variables from
-   * the test.
-   * @param {Number} result 0 - test pass, 1 - test fail
-   * @param {Array.<Object>} capabilities list of capabilities details
-   * @param {Array.<String>} specs List of spec file paths that ran
-   */
-  // after: function (result, capabilities, specs) {
-  // },
-  /**
-   * Gets executed right after terminating the webdriver session.
-   * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
-   * @param {Array.<String>} specs List of spec file paths that ran
-   */
-  // afterSession: function (config, capabilities, specs) {
-  // },
-  /**
-   * Gets executed after all workers got shut down and the process is about to exit.
-   * @param {Object} exitCode 0 - success, 1 - fail
-   * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
-   */
-  onComplete: function(exitCode, config, capabilities) {
-    if (exitCode === 1) {
-
+  afterTest: function(test) {
+    ErrorReporterSingleton.getInstance().maybeAddTestFailure(test);
+  },
+  after: function (result, capabilities, specs) {
+    if (result === 1) {
+      ErrorReporterSingleton.getInstance().report();
     }
-  }
+  },
 };
+
+const ErrorReporterSingleton = (function() {
+  function ErrorReporter() {
+    // spec file -> individual test -> failure data
+    this.errors = {};
+    // With WebdriverIO the screenshot is taken before the
+    // error message is known. So we push the screenshot metadata
+    // into this queue, and dequeue when we get the corresponding
+    // test info.
+    // TODO hold on to single object here instead of queue. Queue is overkill
+    this.errorScreenshotsQueue = [];
+    this.specFileRegex = /icompass\/(test\/e2e\/[a-zA-Z0-9]*\.spec\.js)$/;
+  }
+
+  ErrorReporter.prototype = {
+    enqueueErrorSreenshot: function({ filename, errorMessage }) {
+      this.errorScreenshotsQueue.push({ filename, errorMessage });
+    },
+
+    // These arguments are part of the WebdriverIO's afterTest API
+    addTestFailure: function({ fullName, file: specFilepath, duration }) {
+      const matches = this.specFileRegex.exec(specFilepath);
+      const specTruncatedPath = matches[1];
+      const screenshotOnHold = this.errorScreenshotsQueue.shift();
+      const failureData = {
+        screenshot: screenshotOnHold.filename,
+        errorMessage: screenshotOnHold.errorMessage,
+        testName: fullName,
+        durationInMS: duration,
+      };
+      if (!this.errors[specTruncatedPath]) {
+        this.errors[specTruncatedPath] = [];
+      }
+      this.errors[specTruncatedPath].push({ ...failureData });
+    },
+
+    maybeAddTestFailure: function(test) {
+      // Only report a test as failed if a screenshot has been enqueued
+      if (this.errorScreenshotsQueue.length) {
+        this.addTestFailure(test);
+      }
+    },
+
+    report: function() {
+      jsonfile.writeFileSync(path.resolve(__dirname, '../../tools/travis-wdio-reporter/' + /* TODO */ 'data.json'), this.errors);
+    },
+  };
+
+  let instance;
+
+  return {
+    getInstance: () => {
+      if (instance == null) {
+        instance = new ErrorReporter();
+      }
+
+      return instance;
+    }
+  };
+})();
+

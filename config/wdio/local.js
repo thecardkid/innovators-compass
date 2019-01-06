@@ -37,15 +37,10 @@ exports.config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 100000,
     expectationResultHandler: function (passed, assertion) {
-      // console.log('failed', assertion.message.slice(0, 30));
       const fp = `errorShots/${i++}.png`;
       if (!passed) {
         browser.saveScreenshot(fp);
       }
-      ErrorReporterSingleton.getInstance().enqueueErrorSreenshot({
-        filename: fp,
-        errorMessage: assertion.message,
-      });
     },
   },
   /**
@@ -56,72 +51,5 @@ exports.config = {
     // eslint-disable-next-line no-console
     console.log(`\nExecuting: ${suite.title}.spec.js`);
   },
-  afterTest: function(test) {
-    ErrorReporterSingleton.getInstance().maybeAddTestFailure(test);
-  },
-  after: function (result, capabilities, specs) {
-    if (result === 1) {
-      ErrorReporterSingleton.getInstance().report();
-    }
-  },
 };
 
-const ErrorReporterSingleton = (function() {
-  function ErrorReporter() {
-    // spec file -> individual test -> failure data
-    this.errors = {};
-    // With WebdriverIO the screenshot is taken before the
-    // error message is known. So we push the screenshot metadata
-    // into this queue, and dequeue when we get the corresponding
-    // test info.
-    // TODO hold on to single object here instead of queue. Queue is overkill
-    this.errorScreenshotsQueue = [];
-    this.specFileRegex = /icompass\/(test\/e2e\/[a-zA-Z0-9]*\.spec\.js)$/;
-  }
-
-  ErrorReporter.prototype = {
-    enqueueErrorSreenshot: function({ filename, errorMessage }) {
-      this.errorScreenshotsQueue.push({ filename, errorMessage });
-    },
-
-    // These arguments are part of the WebdriverIO's afterTest API
-    addTestFailure: function({ fullName, file: specFilepath, duration }) {
-      const matches = this.specFileRegex.exec(specFilepath);
-      const specTruncatedPath = matches[1];
-      const screenshotOnHold = this.errorScreenshotsQueue.shift();
-      const failureData = {
-        screenshot: screenshotOnHold.filename,
-        errorMessage: screenshotOnHold.errorMessage,
-        testName: fullName,
-        durationInMS: duration,
-      };
-      if (!this.errors[specTruncatedPath]) {
-        this.errors[specTruncatedPath] = [];
-      }
-      this.errors[specTruncatedPath].push({ ...failureData });
-    },
-
-    maybeAddTestFailure: function(test) {
-      // Only report a test as failed if a screenshot has been enqueued
-      if (this.errorScreenshotsQueue.length) {
-        this.addTestFailure(test);
-      }
-    },
-
-    report: function() {
-      jsonfile.writeFileSync(path.resolve(__dirname, '../../tools/travis-wdio-reporter/' + /* TODO */ 'data.json'), this.errors);
-    },
-  };
-
-  let instance;
-
-  return {
-    getInstance: () => {
-      if (instance == null) {
-        instance = new ErrorReporter();
-      }
-
-      return instance;
-    }
-  };
-})();

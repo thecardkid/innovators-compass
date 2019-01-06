@@ -33,7 +33,7 @@ describe('help menu', () => {
   it('prompt', () => {
     selectHelpOption(actions.prompt);
     b.waitForVisible('#ic-modal');
-    expect('#ic-modal-body').to.have.text(/Innovator's Compass/);
+    expect('#ic-modal-body').to.have.text(/Innovator's Coimpass/);
     b.click('#ic-modal-confirm');
   });
 
