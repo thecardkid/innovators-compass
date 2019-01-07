@@ -19,15 +19,14 @@ echo "running webdriverio tests..."
 
 set +e
 "$IC_ROOT/node_modules/.bin/wdio" "$IC_ROOT/config/wdio/travis.js"
-set -e
 
-if [[ $? == 1 ]]; then
+if [[ $? -eq 1 ]]; then
     pushd "$IC_ROOT/tools/travis-wdio-reporter"
-        echo "generating HTML report.."
+        echo "generating HTML report.." >&2
         node html-generator.js
-        echo "copying report to S3 bucket.."
+        echo "copying report to S3 bucket.." >&2
         aws s3 sync "s3://innovatorscompass/wdio-report-${TRAVIS_BUILD_NUMBER}" s3-static/ --acl public-read
-        echo -e "\nWebdriverIO failures detected, to see the full report, go to https://s3.us-east-2.amazonaws.com/innovatorscompass/wdio-report-${TRAVIS_BUILD_NUMBER}/index.html"
+        echo -e "\nWebdriverIO failures detected, to see the full report, go to https://s3.us-east-2.amazonaws.com/innovatorscompass/wdio-report-${TRAVIS_BUILD_NUMBER}/index.html" >&2
         exit 1
     popd
 fi

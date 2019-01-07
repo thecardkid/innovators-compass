@@ -44,6 +44,7 @@ jobs:
     - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - sudo dpkg -i google-chrome*.deb
     - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+    - pip install --upgrade pip
     - pip install --user awscli
     install:
     - npm install --depth 0
