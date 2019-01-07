@@ -6,7 +6,7 @@ const userAgent = require('./useragent');
 let i = 0;
 exports.config = {
   specs: [
-    './test/e2e/*.spec.js',
+    './test/e2e/help.spec.js',
   ],
   maxInstances: 1,
   capabilities: [{
