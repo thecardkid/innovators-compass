@@ -14,7 +14,7 @@ import * as workspaceX from '../../actions/workspace';
 import Socket from '../../utils/Socket';
 import Toast from '../../utils/Toast';
 
-import { EDITING_MODE, PROMPTS } from '../../../lib/constants';
+import { EDITING_MODE, PROMPTS } from '../../../backend/lib/constants';
 
 class FormManager extends Component {
   constructor(props) {

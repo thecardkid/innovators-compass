@@ -18,7 +18,7 @@ import ToastSingleton from '../utils/Toast';
 
 import * as uiX from '../actions/ui';
 import * as workspaceX from '../actions/workspace';
-import { EDITING_MODE, COLORS, REGEX } from '../../lib/constants';
+import { EDITING_MODE, COLORS, REGEX } from '../../backend/lib/constants';
 
 class WorkspaceMenu extends Component {
   constructor(props) {

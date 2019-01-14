@@ -7,7 +7,7 @@ import * as uiX from '../actions/ui';
 
 import SocketSingleton from '../utils/Socket';
 
-import { EDITING_MODE } from '../../lib/constants';
+import { EDITING_MODE } from '../../backend/lib/constants';
 import ModalSingleton from '../utils/Modal';
 
 class ShortcutManager extends Component {

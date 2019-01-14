@@ -1,4 +1,4 @@
-import { EDITING_MODE } from '../../lib/constants.js';
+import { EDITING_MODE } from '../../backend/lib/constants.js';
 
 const defaultState = {
   forms: {

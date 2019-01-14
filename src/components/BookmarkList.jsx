@@ -8,7 +8,7 @@ import Socket from '../utils/Socket';
 import Storage from '../utils/Storage';
 import ToastSingleton from '../utils/Toast';
 
-import { REGEX } from '../../lib/constants';
+import { REGEX } from '../../backend/lib/constants';
 import Bookmark from './Bookmark';
 
 export default class BookmarkList extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'underscore';
 
-import { STICKY_COLORS } from '../../../lib/constants';
+import { STICKY_COLORS } from '../../../backend/lib/constants';
 
 export default class FormPalette extends Component {
   state = {

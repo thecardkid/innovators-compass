@@ -17,7 +17,7 @@ import Toast from '../utils/Toast';
 import MaybeTappable from '../utils/MaybeTappable';
 import DevOnly from '../utils/DevOnly';
 
-import { REGEX } from '../../lib/constants';
+import { REGEX } from '../../backend/lib/constants';
 
 class LandingPage extends Component {
   constructor(props) {

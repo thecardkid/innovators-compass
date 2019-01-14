@@ -1,7 +1,7 @@
 import html2canvas from 'html2canvas';
 import React, { Component } from 'react';
 
-import { HOST, TWEET } from '../../lib/constants';
+import { HOST, TWEET } from '../../backend/lib/constants';
 import ToastSingleton from '../utils/Toast';
 import SocketSingleton from '../utils/Socket';
 

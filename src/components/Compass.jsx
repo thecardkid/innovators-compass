@@ -18,7 +18,7 @@ import Socket from '../utils/Socket';
 import Storage from '../utils/Storage';
 import Toast from '../utils/Toast';
 
-import { EDITING_MODE } from '../../lib/constants';
+import { EDITING_MODE } from '../../backend/lib/constants';
 
 const QUADRANTS = [
   { id: 'observations', prompt: '2. What\'s happening? Why?' },

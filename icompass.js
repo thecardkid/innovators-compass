@@ -6,8 +6,8 @@ let helmet = require('helmet');
 let path = require('path');
 const s3Router = require('react-dropzone-s3-uploader/s3router');
 
-let logger = require('./lib/logger.js');
-let apiRoutes = require('./routes');
+let logger = require('./backend/lib/logger.js');
+let apiRoutes = require('./backend/routes');
 
 let app = express();
 let db;
@@ -45,10 +45,10 @@ app.get('*', function(request, response) {
 
 let server = app.listen(PORT, function() {
   logger.info('Listening on port:', PORT);
-  db = require('./lib/db.js');
+  db = require('./backend/lib/db.js');
 });
 
-let socket = require('./lib/sockets');
+let socket = require('./backend/lib/sockets');
 socket.connect(server);
 
 function cleanup() {

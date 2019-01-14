@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import { browserHistory } from 'react-router';
 import _ from 'underscore';
 
-import { TWEET } from '../../lib/constants';
+import { TWEET } from '../../backend/lib/constants';
 
 const ModalSingleton = (() => {
   class Modal {

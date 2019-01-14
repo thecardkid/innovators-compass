@@ -8,7 +8,7 @@ import MaybeTappable from '../../utils/MaybeTappable';
 
 import * as uiX from '../../actions/ui';
 
-import { EDITING_MODE } from '../../../lib/constants';
+import { EDITING_MODE } from '../../../backend/lib/constants';
 
 class ModesSubmenu extends Component {
   constructor() {

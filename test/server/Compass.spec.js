@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { Mockgoose } from 'mockgoose';
 import _ from 'underscore';
 
-import Compass from '../../models/compass';
+import Compass from '../../backend/models/compass';
 
 const mockgoose = new Mockgoose(mongoose);
 const topic = 'test suite';

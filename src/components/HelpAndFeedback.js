@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import Modal from '../utils/Modal';
 import Socket from '../utils/Socket';
 
-import { COLORS } from '../../lib/constants';
+import { COLORS } from '../../backend/lib/constants';
 
 export default class HelpAndFeedback extends Component {
   constructor() {

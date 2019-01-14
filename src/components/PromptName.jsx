@@ -5,7 +5,7 @@ import Tappable from 'react-tappable/lib/Tappable';
 import Modal from '../utils/Modal';
 import Toast from '../utils/Toast';
 import Socket from '../utils/Socket';
-import { REGEX } from '../../lib/constants';
+import { REGEX } from '../../backend/lib/constants';
 
 export default class PromptName extends Component {
   constructor() {

@@ -7,7 +7,7 @@ import _ from 'underscore';
 import * as uiX from '../actions/ui';
 import * as workspaceX from '../actions/workspace';
 
-import { EDITING_MODE } from '../../lib/constants';
+import { EDITING_MODE } from '../../backend/lib/constants';
 
 class SelectArea extends Component {
   constructor() {

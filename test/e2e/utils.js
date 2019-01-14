@@ -5,7 +5,7 @@ chai.use(chaiWebdriver(browser));
 const _ = require('underscore');
 
 const { expect } = chai;
-const { STICKY_COLORS } = require('../../lib/constants');
+const { STICKY_COLORS } = require('../../backend/lib/constants');
 
 const setup = () => {
   browser.setViewportSize({ width: 2000, height: 2000 });

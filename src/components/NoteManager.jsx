@@ -11,7 +11,7 @@ import * as uiX from '../actions/ui';
 import * as workspaceX from '../actions/workspace';
 import Socket from '../utils/Socket';
 import Toast from '../utils/Toast';
-import { EDITING_MODE } from '../../lib/constants';
+import { EDITING_MODE } from '../../backend/lib/constants';
 
 class NoteManager extends Component {
   constructor() {

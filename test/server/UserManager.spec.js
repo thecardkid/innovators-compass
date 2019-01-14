@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import _ from 'underscore';
 
-import UserManager from '../../lib/UserManager';
-import { STICKY_COLORS } from '../../lib/constants';
+import UserManager from '../../backend/lib/UserManager';
+import { STICKY_COLORS } from '../../backend/lib/constants';
 
 const code = '1a2b3c4d';
 const username = 'bruce willis';

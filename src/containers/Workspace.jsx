@@ -26,7 +26,7 @@ import Socket from '../utils/Socket';
 import Storage from '../utils/Storage';
 import Toast from '../utils/Toast';
 
-import { EDITING_MODE, REGEX } from '../../lib/constants';
+import { EDITING_MODE, REGEX } from '../../backend/lib/constants';
 import { browserHistory } from 'react-router';
 
 class Workspace extends Component {

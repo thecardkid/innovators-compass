@@ -8,7 +8,7 @@ import FormPalette from './FormPalette';
 
 import * as uiX from '../../actions/ui';
 
-import { REGEX, HOST, S3_URL } from '../../../lib/constants';
+import { REGEX, HOST, S3_URL } from '../../../backend/lib/constants';
 import SocketSingleton from '../../utils/Socket';
 import ToastSingleton from '../../utils/Toast';
 
