@@ -54,13 +54,9 @@ class Workspace extends Component {
         'user joined': this.onUserJoined,
         'user left': this.onUserLeft,
         'disconnect': () => this.toast.error('Lost connection to server'),
-        'reconnect': () => {
-          this.toast.success('Established connection to server');
-          this.socket.onReconnect({
-            editCode: this.mustGetEditCode(),
-            users: this.props.users,
-          });
-        }
+        'reconnect': this.handleReconnect,
+        'bad username': this.handleBadUsername,
+        'username exists': this.handleUsernameExists,
       });
       this.socket.emitFindCompassEdit(this.props.params);
       ReactGA.pageview('/compass/edit/');
@@ -68,6 +64,36 @@ class Workspace extends Component {
 
     this.props.uiX.setScreenSize(window.innerWidth, window.innerHeight);
   }
+
+  handleReconnect = () => {
+    this.toast.success('Established connection to server');
+    this.socket.onReconnect({
+      editCode: this.mustGetEditCode(),
+      users: this.props.users,
+    });
+  };
+
+  handleBadUsername = () => {
+    this.modal.alert({
+      heading: 'Please fix your username',
+      body: [
+        'Usernames can only contain letters, and shorter than 15 characters.',
+        'Click "OK" to pick a new one.',
+      ],
+      cb: () => browserHistory.push(`/compass/edit/${this.props.params.editCode}`),
+    });
+  };
+
+  handleUsernameExists = () => {
+    this.modal.alert({
+      heading: 'Whoops..',
+      body: [
+        'Someone already took that username',
+        'Click "OK" to pick a new one',
+      ],
+      cb: () => browserHistory.push(`/compass/edit/${this.props.params.editCode}`),
+    });
+  };
 
   mustGetEditCode() {
     const editCodeRegex = /[a-zA-Z0-9]{8}/;
