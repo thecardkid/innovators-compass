@@ -99,7 +99,17 @@ compassSchema.statics.findByViewCode = function(code) {
   });
 };
 
-compassSchema.methods.setCenter = function(center) {
+compassSchema.methods.setCenter = function(peopleGroups) {
+  let center = peopleGroups;
+  if (Array.isArray(peopleGroups)) {
+    for (let i = 0; i < peopleGroups.length; i++) {
+      if (peopleGroups[i].includes(';')) {
+        throw new Error('People group includes banned character ";"');
+      }
+    }
+    center = peopleGroups.join(';');
+  }
+
   return new Promise((resolve, reject) => {
     const { _id } = this;
     this.model('Compass').findByIdAndUpdate(
