@@ -10,6 +10,7 @@ import * as compassX from '../actions/compass';
 import * as uiX from '../actions/ui';
 
 import SelectArea from './SelectArea';
+import PeopleGroupsModal from './modals/PeopleGroupsModal';
 import NoteManager from '../components/NoteManager.jsx';
 import NoteManagerViewOnly from '../components/NoteManagerViewOnly.jsx';
 import MaybeTappable from '../utils/MaybeTappable';
@@ -35,6 +36,8 @@ class Compass extends Component {
     this.hasEditingRights = !this.props.viewOnly;
     this.state = {
       showFullTopic: false,
+      // should maybe move to Redux store
+      showPeopleGroupsModal: false,
     };
 
     if (this.hasEditingRights) {
@@ -218,6 +221,14 @@ class Compass extends Component {
     this.setState({ showFullTopic: !this.state.showFullTopic });
   };
 
+  showPeopleGroupsModal = () => {
+    this.setState({ showPeopleGroupsModal: true });
+  };
+
+  hidePeopleGroupsModal = () => {
+    this.setState({ showPeopleGroupsModal: false });
+  };
+
   renderPromptFirstQuestion() {
     const style = Object.assign(this.getCenterCss(100, 100), {zIndex: 5});
     return (
@@ -234,15 +245,15 @@ class Compass extends Component {
 
   renderCompassStructure = () => {
     const { center, topic } = this.props.compass;
-    let css, length;
-    if (center.length <= 40) {
-      css = this.getCenterTextCss(11, length = 100);
-    } else if (center.length <= 70) {
-      css = this.getCenterTextCss(14, length = 120);
-    } else {
-      // center text at most 100
-      css = this.getCenterTextCss(16, length = 140);
-    }
+    // let css, length;
+    // if (center.length <= 40) {
+    //   css = this.getCenterTextCss(11, length = 100);
+    // } else if (center.length <= 70) {
+    //   css = this.getCenterTextCss(14, length = 120);
+    // } else {
+    //   // center text at most 100
+    //   css = this.getCenterTextCss(16, length = 140);
+    // }
 
     let displayedTopic = topic;
     let needsTooltip = true;
@@ -260,17 +271,18 @@ class Compass extends Component {
       }
     }
 
+    const action = this.state.showPeopleGroupsModal ? 'collapse' : 'expand';
     return (
       <div>
         <div id="center"
-             data-tip="Double-click to edit"
+             data-tip={`Click to ${action}. Double-click to edit`}
              data-for="center-tooltip"
              style={{
                ...this.getCenterCss(length, length),
                cursor: this.hasEditingRights ? 'pointer' : 'auto',
              }}
-             onDoubleClick={this.hasEditingRights ? this.editPeopleInvolved : _.noop} >
-          <p className="wordwrap" style={css}>{center}</p>
+             onDoubleClick={this.hasEditingRights ? this.showPeopleGroupsModal : _.noop} >
+          <i className={'material-icons'}>zoom_out_map</i>
         </div>
         {this.hasEditingRights &&
           <ReactTooltip id={'center-tooltip'}
@@ -339,6 +351,9 @@ class Compass extends Component {
         {this.props.ui.bookmarked && <div id={'ic-bookmark-indicator'}><i className={'material-icons'}>bookmark</i></div>}
         <SelectArea show={this.state.select} done={this.onMouseUp}/>
         {compass}
+        {this.state.showPeopleGroupsModal &&
+          <PeopleGroupsModal/>
+        }
       </div>
     );
   }
