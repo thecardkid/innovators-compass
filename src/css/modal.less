@@ -308,3 +308,77 @@ div.ic-feedback {
     }
   }
 }
+
+div.ic-people-groups-modal {
+
+  div.people-group-inputs {
+    margin-top: 15px;
+
+    div.people-group-input {
+      height: 31px;
+      margin-top: 5px;
+
+      input {
+        border: 1px solid grey;
+        float: left;
+        width: 82%;
+        font-size: 15px;
+        .border-radius(2px);
+        padding: 5px 10px;
+        cursor: text;
+      }
+
+      i {
+        float: right;
+        color: @red;
+        margin-top: 3px;
+        margin-right: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  div.add-people-group {
+    clear: both;
+    margin-top: 10px;
+    font-size: 11px;
+
+    i {
+      vertical-align: middle;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    span {
+      margin-left: 3px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+
+  div.actions {
+    margin-top: 5px;
+    height: 10px;
+
+    button {
+      float: right;
+      height: 28px;
+      font-size: 12px;
+      margin-left: 10px;
+      padding: 0 10px;
+      font-family: inherit;
+      .border-radius(2px);
+    }
+
+    button.save {
+      background: @dark;
+      color: @light;
+    }
+
+    button.cancel {
+      background: none;
+      color: @dark;
+      border: 1px solid @dark;
+    }
+  }
+}

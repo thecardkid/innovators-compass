@@ -20,7 +20,9 @@ export default (state = {}, action) => {
     case 'setCenter':
       return {
         ...state,
-        center: action.center.split(';'),
+        // No need to split here, because this doesn't come
+        // from Mongo
+        center: action.center,
       };
 
     default:
