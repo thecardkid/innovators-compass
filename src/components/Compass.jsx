@@ -111,7 +111,7 @@ class Compass extends Component {
 
   renderQuadrant = (q) => {
     return (
-      <div className="ic-quadrant"
+      <div className={'ic-quadrant'}
            key={`quadrant-${q.id}`}
            style={{
              width: this.props.ui.vw / 2,
@@ -201,20 +201,8 @@ class Compass extends Component {
     };
   };
 
-  setPeopleInvolved = () => {
-    this.modal.promptForCenter(this.toast.warn, (people) => {
-      this.socket.emitSetCenter(this.props.compass._id, people);
-    });
-  };
-
-  editPeopleInvolved = () => {
-    this.modal.editCenter(this.props.compass.center, (edited) => {
-      if (!edited) {
-        return;
-      }
-
-      this.socket.emitSetCenter(this.props.compass._id, edited);
-    });
+  setPeopleInvolved = (people) => {
+    this.socket.emitSetCenter(this.props.compass._id, people);
   };
 
   showOrHideFullTopic = () => {
@@ -352,7 +340,9 @@ class Compass extends Component {
         <SelectArea show={this.state.select} done={this.onMouseUp}/>
         {compass}
         {this.state.showPeopleGroupsModal &&
-          <PeopleGroupsModal/>
+          <PeopleGroupsModal close={this.hidePeopleGroupsModal}
+                             submit={this.setPeopleInvolved}
+                             defaultPeopleGroups={this.props.compass.center} />
         }
       </div>
     );
