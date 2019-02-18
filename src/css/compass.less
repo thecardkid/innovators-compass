@@ -88,14 +88,34 @@ div.ic-compass-label {
 }
 
 #center {
-  .border-radius(25%);
+  .hasTransition(0.1s);
   position: absolute;
-  background: @dark;
-  color: @light;
-  text-align: center;
-  z-index: @centerZIndex;
+  background: @light;
+  color: @dark;
   cursor: pointer;
   .unselectable;
+
+  &.expanded {
+    z-index: @expandedCenterZIndex;
+    border-radius: 10px;
+    overflow-y: scroll;
+
+    i.close {
+      float: right;
+      margin-right: 10px;
+    }
+  }
+
+  &.collapsed {
+    z-index: @centerZIndex;
+    border-radius: 100%;
+    text-align: center;
+  }
+
+  i {
+    font-size: 26px;
+    margin-top: 5px;
+  }
 
   p#first-prompt {
     margin-top: 42px;
