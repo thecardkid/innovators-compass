@@ -9,6 +9,7 @@ import _ from 'underscore';
 import * as compassX from '../actions/compass';
 import * as uiX from '../actions/ui';
 
+import ExpandingCenter from './ExpandingCenter';
 import SelectArea from './SelectArea';
 import PeopleGroupsModal from './modals/PeopleGroupsModal';
 import NoteManager from '../components/NoteManager.jsx';
@@ -38,6 +39,7 @@ class Compass extends Component {
       showFullTopic: false,
       // should maybe move to Redux store
       showPeopleGroupsModal: false,
+      centerExpanded: false,
     };
 
     if (this.hasEditingRights) {
@@ -167,37 +169,12 @@ class Compass extends Component {
     setTimeout(() => $('#experiments').css({opacity: 1}), start + (3 * deltaTimeMs));
   };
 
-  getCenterCss(r) {
+  getCenterCSSPosition = (r) => {
     return {
       top: Math.max((this.props.ui.vh - r) / 2, 0),
       left: Math.max((this.props.ui.vw - r) / 2, 0),
       width: r,
       height: r,
-    };
-  }
-
-  getCenterTextCss = (charPerLine, r, width) => {
-    const lineHeight = 13;
-
-    const words = this.props.compass.center.split(' ');
-    let currLine = words.shift().length;
-    let numLines = 0;
-
-    while (words.length > 0) {
-      let w = words.shift();
-      if (currLine + w.length + 1 > charPerLine) {
-        numLines++;
-        currLine = w.length;
-      } else {
-        currLine += w.length + 1;
-      }
-    }
-    if (currLine > 0) numLines++;
-
-    let textHeight = lineHeight * numLines;
-    return {
-      marginTop: (r - textHeight) / 2,
-      width,
     };
   };
 
@@ -218,9 +195,10 @@ class Compass extends Component {
   };
 
   renderPromptFirstQuestion() {
-    const style = Object.assign(this.getCenterCss(100, 100), {zIndex: 5});
+    const style = Object.assign(this.getCenterCSSPosition(100, 100), {zIndex: 5});
     return (
       <div>
+        {/*TODO*/}
         <div id="center" className="wordwrap" style={style} onClick={this.setPeopleInvolved}>
           <p id="first-prompt">Start here</p>
         </div>
@@ -233,15 +211,6 @@ class Compass extends Component {
 
   renderCompassStructure = () => {
     const { center, topic } = this.props.compass;
-    // let css, length;
-    // if (center.length <= 40) {
-    //   css = this.getCenterTextCss(11, length = 100);
-    // } else if (center.length <= 70) {
-    //   css = this.getCenterTextCss(14, length = 120);
-    // } else {
-    //   // center text at most 100
-    //   css = this.getCenterTextCss(16, length = 140);
-    // }
 
     let displayedTopic = topic;
     let needsTooltip = true;
@@ -259,19 +228,13 @@ class Compass extends Component {
       }
     }
 
-    const action = this.state.showPeopleGroupsModal ? 'collapse' : 'expand';
     return (
       <div>
-        <div id="center"
-             data-tip={`Click to ${action}. Double-click to edit`}
-             data-for="center-tooltip"
-             style={{
-               ...this.getCenterCss(length, length),
-               cursor: this.hasEditingRights ? 'pointer' : 'auto',
-             }}
-             onDoubleClick={this.hasEditingRights ? this.showPeopleGroupsModal : _.noop} >
-          <i className={'material-icons'}>zoom_out_map</i>
-        </div>
+        <ExpandingCenter showPeopleGroupsModal={this.showPeopleGroupsModal}
+                         getCSSPosition={this.getCenterCSSPosition}
+                         canEdit={this.hasEditingRights}
+                         peopleGroups={this.props.compass.center}
+        />
         {this.hasEditingRights &&
           <ReactTooltip id={'center-tooltip'}
                         place={'bottom'}
