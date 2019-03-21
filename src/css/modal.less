@@ -340,7 +340,7 @@ div.ic-people-groups-modal {
 
   div.add-people-group {
     clear: both;
-    margin-top: 10px;
+    margin: 10px 0 20px;
     font-size: 11px;
 
     i {
@@ -361,13 +361,26 @@ div.ic-people-groups-modal {
     height: 10px;
 
     button {
-      float: right;
+      &.right {
+        float: right;
+        margin-left: 10px;
+      }
+
+      &.left {
+        float: left;
+        margin-right: 10px;
+      }
+
       height: 28px;
       font-size: 12px;
-      margin-left: 10px;
       padding: 0 10px;
       font-family: inherit;
       .border-radius(2px);
+    }
+
+    button.pin {
+      background: @blue;
+      color: @light;
     }
 
     button.save {

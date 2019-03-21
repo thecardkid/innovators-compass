@@ -67,7 +67,7 @@ class BulkEditToolbar extends Component {
     const tooltipType = Storage.getTooltipTypeBasedOnDarkTheme();
 
     return (
-      <Draggable>
+      <Draggable bounds={'div#compass'}>
         <div id="ic-visual-toolbar">
           <div id={'header'}>
             Bulk Edit Toolbar
