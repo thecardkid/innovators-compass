@@ -8,7 +8,7 @@ export default class PeopleGroupsModal extends Component {
     super(props);
 
     this.state = {
-      pinned: true, //TODO change back
+      pinned: false,
     };
     if (props.defaultPeopleGroups.length > 0) {
       this.state.peopleGroups = props.defaultPeopleGroups;
@@ -89,6 +89,12 @@ export default class PeopleGroupsModal extends Component {
     );
   }
 
+  togglePin = () => {
+    this.setState({
+      pinned: !this.state.pinned,
+    });
+  };
+
   render() {
     const contents = (
       <div className={'contents'}>
@@ -102,8 +108,12 @@ export default class PeopleGroupsModal extends Component {
             <span>Add People Group</span>
           </div>
           <div className={'actions'}>
-            <button className={'save'} onClick={this.savePeopleGroups}>Save</button>
-            <button className={'cancel'} onClick={this.props.close}>Cancel</button>
+            <button className={'left pin'}
+                    onClick={this.togglePin}>{
+              this.state.pinned ? 'Unpin' : 'Pin'
+            }</button>
+            <button className={'right save'} onClick={this.savePeopleGroups}>Save</button>
+            <button className={'right cancel'} onClick={this.props.close}>Cancel</button>
           </div>
         </div>
       </div>
@@ -111,7 +121,7 @@ export default class PeopleGroupsModal extends Component {
 
     if (this.state.pinned) {
       return (
-        <Draggable>
+        <Draggable bounds={'div#compass'}>
           <div className={'ic-people-groups-modal ic-dynamic-modal ic-draggable-modal'} onClick={this.dontClose}>
             {contents}
           </div>
