@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Draggable from 'react-draggable';
 
 import ToastSingleton from '../../utils/Toast';
 
@@ -6,7 +7,9 @@ export default class PeopleGroupsModal extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      pinned: true, //TODO change back
+    };
     if (props.defaultPeopleGroups.length > 0) {
       this.state.peopleGroups = props.defaultPeopleGroups;
     } else {
@@ -87,25 +90,39 @@ export default class PeopleGroupsModal extends Component {
   }
 
   render() {
+    const contents = (
+      <div className={'contents'}>
+        <div className={'header'}>
+          <h1 className={'title'}>1. Who's involved, including you?</h1>
+        </div>
+        <div>
+          {this.renderInputs()}
+          <div className={'add-people-group'} onClick={this.addPeopleGroup}>
+            <i className={'material-icons'}>add</i>
+            <span>Add People Group</span>
+          </div>
+          <div className={'actions'}>
+            <button className={'save'} onClick={this.savePeopleGroups}>Save</button>
+            <button className={'cancel'} onClick={this.props.close}>Cancel</button>
+          </div>
+        </div>
+      </div>
+    );
+
+    if (this.state.pinned) {
+      return (
+        <Draggable>
+          <div className={'ic-people-groups-modal ic-dynamic-modal ic-draggable-modal'} onClick={this.dontClose}>
+            {contents}
+          </div>
+        </Draggable>
+      );
+    }
+
     return (
       <div id={'ic-backdrop'} onClick={this.close}>
         <div className={'ic-people-groups-modal ic-dynamic-modal'} onClick={this.dontClose}>
-          <div className={'contents'}>
-            <div className={'header'}>
-              <h1 className={'title'}>1. Who's involved, including you?</h1>
-            </div>
-            <div>
-              {this.renderInputs()}
-              <div className={'add-people-group'} onClick={this.addPeopleGroup}>
-                <i className={'material-icons'}>add</i>
-                <span>Add People Group</span>
-              </div>
-              <div className={'actions'}>
-                <button className={'save'} onClick={this.savePeopleGroups}>Save</button>
-                <button className={'cancel'} onClick={this.props.close}>Cancel</button>
-              </div>
-            </div>
-          </div>
+          {contents}
         </div>
       </div>
     );
