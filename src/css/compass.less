@@ -89,32 +89,14 @@ div.ic-compass-label {
 
 #center {
   .hasTransition(0.1s);
+  .unselectable;
   position: absolute;
   background: @light;
   color: @dark;
   cursor: pointer;
-  .unselectable;
-
-  &.expanded {
-    z-index: @expandedCenterZIndex;
-    border-radius: 10px;
-    overflow-y: scroll;
-
-    i.close {
-      float: right;
-      margin-right: 10px;
-    }
-
-    div.text {
-      min-height: 100px;
-    }
-  }
-
-  &.collapsed {
-    z-index: @centerZIndex;
-    border-radius: 100%;
-    text-align: center;
-  }
+  z-index: @centerZIndex;
+  border-radius: 100%;
+  text-align: center;
 
   i {
     font-size: 26px;

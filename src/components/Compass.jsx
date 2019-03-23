@@ -9,7 +9,6 @@ import _ from 'underscore';
 import * as compassX from '../actions/compass';
 import * as uiX from '../actions/ui';
 
-import ExpandingCenter from './ExpandingCenter';
 import SelectArea from './SelectArea';
 import PeopleGroupsModal from './modals/PeopleGroupsModal';
 import NoteManager from '../components/NoteManager.jsx';
@@ -39,7 +38,6 @@ class Compass extends Component {
       showFullTopic: false,
       // should maybe move to Redux store
       showPeopleGroupsModal: false,
-      centerExpanded: false,
     };
 
     if (this.hasEditingRights) {
@@ -51,7 +49,7 @@ class Compass extends Component {
         'center set': this.setCompassCenter,
       });
       if (props.compass.center.length === 0) {
-        this.setPeopleInvolved();
+        this.state.showPeopleGroupsModal = true;
       }
     }
   }
@@ -179,6 +177,9 @@ class Compass extends Component {
   };
 
   setPeopleInvolved = (people) => {
+    if (!people || !people.length) {
+      return;
+    }
     this.socket.emitSetCenter(this.props.compass._id, people);
   };
 
@@ -195,12 +196,11 @@ class Compass extends Component {
   };
 
   renderPromptFirstQuestion() {
-    const style = Object.assign(this.getCenterCSSPosition(100, 100), {zIndex: 5});
     return (
       <div>
-        {/*TODO*/}
-        <div id="center" className="wordwrap" style={style} onClick={this.setPeopleInvolved}>
-          <p id="first-prompt">Start here</p>
+        <div id={'center'}
+             style={this.getCenterCSSPosition(40)}>
+          <i className={'material-icons'}>people</i>
         </div>
         <div id="hline" style={{ top: this.props.ui.vh / 2 - 2 }}/>
         <div id="vline" style={{ left: this.props.ui.vw / 2 - 2 }}/>
@@ -210,7 +210,7 @@ class Compass extends Component {
   }
 
   renderCompassStructure = () => {
-    const { center, topic } = this.props.compass;
+    const { topic } = this.props.compass;
 
     let displayedTopic = topic;
     let needsTooltip = true;
@@ -230,11 +230,14 @@ class Compass extends Component {
 
     return (
       <div>
-        <ExpandingCenter showPeopleGroupsModal={this.showPeopleGroupsModal}
-                         getCSSPosition={this.getCenterCSSPosition}
-                         canEdit={this.hasEditingRights}
-                         peopleGroups={this.props.compass.center}
-        />
+        <div id={'center'}
+             data-tip={'Click to view'}
+             data-for="center-tooltip"
+             className={'collapsed'}
+             style={this.getCenterCSSPosition(40)}
+             onClick={this.showPeopleGroupsModal}>
+          <i className={'material-icons'}>people</i>
+        </div>
         {this.hasEditingRights &&
           <ReactTooltip id={'center-tooltip'}
                         place={'bottom'}
@@ -305,6 +308,7 @@ class Compass extends Component {
         {this.state.showPeopleGroupsModal &&
           <PeopleGroupsModal close={this.hidePeopleGroupsModal}
                              submit={this.setPeopleInvolved}
+                             canEdit={this.hasEditingRights}
                              defaultPeopleGroups={this.props.compass.center} />
         }
       </div>
