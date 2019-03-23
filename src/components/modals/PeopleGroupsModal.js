@@ -24,6 +24,11 @@ export default class PeopleGroupsModal extends Component {
   }
 
   close = () => {
+    if (this.props.defaultPeopleGroups.length === 0) {
+      // Keep message consistent with this.save
+      this.toast.error('You must have at least one people group');
+      return;
+    }
     this.props.close();
   };
 
@@ -48,7 +53,7 @@ export default class PeopleGroupsModal extends Component {
     this.setState({ peopleGroups: tmp });
   };
 
-  savePeopleGroups = () => {
+  save = () => {
     const { peopleGroups } = this.state;
     const valid = [];
     for (let i = 0; i < peopleGroups.length; i++) {
@@ -62,7 +67,9 @@ export default class PeopleGroupsModal extends Component {
       }
     }
     if (valid.length === 0) {
-      this.toast.error('There should be at least 1 people group!');
+      // Keep message consistent with this.close
+      this.toast.error('You must have at least one people group');
+      return;
     }
     this.props.submit(valid);
     this.toast.info('Saved people groups');
@@ -112,8 +119,8 @@ export default class PeopleGroupsModal extends Component {
                     onClick={this.togglePin}>{
               this.state.pinned ? 'Unpin' : 'Pin'
             }</button>
-            <button className={'right save'} onClick={this.savePeopleGroups}>Save</button>
-            <button className={'right cancel'} onClick={this.props.close}>Cancel</button>
+            <button className={'right save'} onClick={this.save}>Save</button>
+            <button className={'right cancel'} onClick={this.close}>Cancel</button>
           </div>
         </div>
       </div>
