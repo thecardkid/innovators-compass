@@ -69,7 +69,6 @@ jobs:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker build -t $DOCKER_TAG .
     - export REPO=$DOCKER_USER/icompass
-    - docker images
     - docker tag $DOCKER_TAG $REPO:develop
     - docker push $REPO:develop
   - stage: deploy tag
@@ -78,6 +77,5 @@ jobs:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker build -t $DOCKER_TAG .
     - export REPO=$DOCKER_USER/icompass
-    - docker images
     - docker tag $DOCKER_TAG $REPO:$TRAVIS_TAG
     - docker push $REPO:$TRAVIS_TAG
