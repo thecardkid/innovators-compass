@@ -7,7 +7,7 @@ const ToastSingleton = (() => {
     }
 
     getSpan(clazz, msg) {
-      if (clazz === 'error') msg += ' [ Click to dismiss ]';
+      if (clazz === 'error') msg += ' (click to dismiss)';
       return `<span class="${clazz}">${msg}</span>`;
     }
 
@@ -18,7 +18,7 @@ const ToastSingleton = (() => {
     };
 
     info = (msg) => {
-      window.clearTimeout(this.timeout);
+      clearTimeout(this.timeout);
       $('#ic-toast').empty().append(this.getSpan('info', msg));
       this.timeout = window.setTimeout(this.clear, 5000);
     };
