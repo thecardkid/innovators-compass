@@ -28,9 +28,13 @@ import Store from '../store';
 })();
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.toast = Toast.getInstance();
+  }
+
+  componentDidMount() {
+    this.toast.error('This is a test');
   }
 
   render() {

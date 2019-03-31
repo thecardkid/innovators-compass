@@ -200,17 +200,18 @@ div#container {
 }
 
 div#ic-toast {
+  font-family: @notosans;
+  z-index: @toastZIndex;
   height: 0;
   position: fixed;
   .border-radius(4px);
   width: 100%;
   text-align: center;
   top: 20px;
-  z-index: @toastZIndex;
 
   span {
-    padding: 3px 12px;
-    font-size: 15px;
+    padding: 5px 12px;
+    font-size: 13px;
     cursor: pointer;
     .border-radius(4px);
   }
