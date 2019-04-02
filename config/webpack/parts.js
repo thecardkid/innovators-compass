@@ -24,7 +24,9 @@ const jsxLoader = () => ({
 
 const lessLoader = () => ({
   test: /\.less$/,
-  include: path.resolve(root, 'src/css'),
+  include: [
+    path.resolve(root, 'src/consumer/css'),
+  ],
   use: [
     {
       loader: 'style-loader'
