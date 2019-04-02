@@ -7,7 +7,7 @@ let path = require('path');
 const s3Router = require('react-dropzone-s3-uploader/s3router');
 
 let logger = require('./lib/logger.js');
-let apiRoutes = require('./routes');
+let apiRoutes = require('./routes/api/v1');
 
 let app = express();
 let db;
@@ -37,7 +37,6 @@ app.use('/s3', s3Router({
   ACL: 'public-read',
   uniquePrefix: true,
 }));
-
 
 app.get('*', function(request, response) {
   response.sendFile(path.resolve(__dirname, 'public', 'index.html'));

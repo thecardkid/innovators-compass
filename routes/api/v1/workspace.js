@@ -1,6 +1,6 @@
 require('babel-polyfill');
 const router = require('express').Router();
-const compassSchema = require('../models/compass');
+const compassSchema = require('../../../models/compass');
 
 router.get('/view', async (req, res) => {
   const compass = await compassSchema.findByViewCode(req.query.id);
