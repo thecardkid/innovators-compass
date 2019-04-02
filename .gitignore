@@ -7,9 +7,7 @@ package-lock.json
 docker/prod.yml
 build/
 
-bundle.js
-bundle.js.map
-bundle.js.gz
+public/*bundle*
 main.css
 main.css.map
 
