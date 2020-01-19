@@ -50,7 +50,7 @@ jobs:
     - npm run api
     - docker-compose -f docker/compose.yml up --detach
     # Wait for docker-compose to start app
-    - sleep 15s
+    - sleep 60s
     - npm run mocha
     - ./scripts/wdio-travis.sh
   - stage: build production docker image
