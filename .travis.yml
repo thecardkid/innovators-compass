@@ -1,83 +1,78 @@
 sudo: required
 services:
-- docker
-- xvfb
+  - docker
+  - xvfb
+addons:
+  chrome: stable
 language: node_js
 node_js:
-- '8'
+  - '8'
 env:
   # If the environment variable is needed when running the server, also
   # add it to docker/compose.yml
   global:
-  - NODE_ENV=test
-  - DOCKER_TAG=${TRAVIS_COMMIT::8}
-  - DOCKER_COMPOSE_VERSION=1.20.1
-  # DOCKER_USER
-  - secure: m4jgTUSPYMrOQZYo5TqSmn5j9qFdEdekzRGoK+k4H+rFynEa6vwm2fz6nf0dIAaMjLwV+R+yBO6ezN4dPyLzfZRxlZ2mo16emKvaiTDxx+p3WhA0f8QldmzhwNdsMVTMJCr9v8xLguQaF8+OX8XViibwpTirDSqykxNkbxlkjWa3UG9U6zh8jmiTg2AXiivZelzM+nRngUfGDXy3+MowP3BMsbfVnonsmtkoFcRixj+urPZ2Y/ebCdnsng7kKz29726dL4v4UFSLLK95kgvdGbH4vVfB+Y9uJeJGsnjW2sr12GRiPI5lsUOWt3xbr8v9PKB+9881U2BmA9SjJnf1tvceJiawfbg66k1IYVQ287rtrgtdjTdKVIkfkgP2M9BVgHPuRilb7KAuMFDhBKAZZLTPnGHsWyKeqjzgNcIx3blcTCW+qqgJvlYlzWi4xRXutCdrxqz0q6Ii3SUym2dmcLDmqN7dxl92Rd/EhPXfvrftRtfwpdBx5VWPZoCnFdM3Ko/H0ZVRqZRUdmIhgYCS0obM8Yp6MKjER2izyJcNEdcZ/DxnLoML2tpSft3wjukbZUDAGwkqwva0hdsM2BOakxCtI5sGatU3w7AosTPXSKrU0M1t3a79nlij8xbAb2V7LN2IwRVN8pRXNGjTe6jTg5i17X3aCT4rYwwUQi0t23U=
-  # DOCKER_PASS
-  - secure: GILY37ioGMnTbMXy4Awy3mCROsmKf9j3/7tfC/fuVs+BFjD1wBtMUk7G8d9Br+bp/6uOgud2ZWSJZU2SpFlxyC2XlRjUlOPCGkYtMtfDHkxvA3rHviJORBquqpdEmlQWlFvubeE6r9EemaVtvWLhLV1mInW5wO5b8LvrzDqmgkqpaNgmftVw+7kbZl4H2P8sPRAZt37SK8ptLLq90x45DkGiEO2WNAnLi0TplwtweULAtVKi8KUeYStHqO6luUmS0TNYQjviNQlSlcwCClYKwZ/ls/YWUoRGaZ7DB1+Nv1xSfqlUjW7UOlTePw6zfWODvNCa1ZOtUoRHUDKKVFGnCaQFFgByyQk6ITdafnyJlp3tUZNt3YuRlx/j0Toh4NsDvOTTZCTVsUe+vhASAqON7mFed9TNc+QQ0Y64uZOp5G3s+P7iilLBTMp0oN3zQQeKgpTsTmTCv4HUVQUDvPZMvdiT/4ji6LRQStIBRlTFJDLD0NXR6huS3eOHuJkL+chHjC3k0oL4jdo90kBCTydyS4hILgci2mcSeL7ZyFqzEv0VIlPrb7yTp4w8IrLna3JBCKteWkM7gyyxF6xCxxiFdl2K2pIq9aQ7Vco3JDYpmn4iafn8d/2c73oKwphqkhHhhuhq0ko42W2tzKjBA3s+yCBk3O/9P7dVhJEbAHfeMfI=
-  # MONGO_URI
-  - secure: sxv7nf/OyN0PBEUvjRFGmU0pRa+dbEOnQgDJse7mn+UeubrYAoQ9LVS3BmfvkenZml+Su9qfMg48ApDjb17HwNpbMy0VymzHj1UW4gBXRCM5d2jfmAlyuNJB50IVZ1PYT1WVfzQIULjuYGgYHWzZs5EytpzrpaJT2Bw6IRVVQezj+9YpTM79a11LnGeQa9q9TNiDRhjOgVvWRVj87kqUpPr6G1F9rVhxKdkBY2BSquRw2Ot8awAcD9pobR7NGL8LeprDD3KzMllOgyTMNLkpaxKZrQorEYn3sLtQGWGp5u7ZZXNHsWSR2CYNCqkoeNOkUvoSgdKx7XdP7r3BqkL/bKOyc/rURmzQx4pfpZ1gZCQK4OYPDkvoFnvAKVKYl0Ll0qgXL6QHIod3AK02/yG83rBKuBd0cQmiyKmHyOpc/R97YL11Jr2QriGXRmlmwLGxKuV2iRdnKOTD4ib8tyk5GG4gScieq5TA8y3elmCrSAZ0FJdFDMTtEMQxoD+RouHNaqNUa6cnnNNaLWwkei67PmcEfemH088J18en6omwapSTwDlyHSQcYpvSxuvVoLdy27FwppJ8EUBixcHqKRJhbnfncpZyGpL3nNWMGHqcDW0I+Fw9T3UD5PGsGAO6MFEr6BnQOL95rUh+joYaZPhq887SwfZ0IazzgUEIgyaW55I=
-  # AWS_ACCESS_KEY_ID
-  - secure: Etgdc91EKbOXuWWt5W0e/Qhlxqb6nM/1iTLQzHc65cpJ1rbxXwO2Fq8+ismcL3diLs6JNTzaOwgTYPpTw5MQrY3kO6Uw8uPqDrZb0zwxkp8lHbVbIKefQAzvc3qh3jECoQTxRaurWCwmEPTG1Map/30KHlLBPd1jJ3UwAJDho5ELum0DGrHQ+rnOXSwO8ivBXg14vnkAA1FndoASiGCM4yFHIVKffkn76Ai8B8hlCsl1NUSH+H0oLnm/QEhjMDOc1kkdjwO80OBSKKOAC8syynxa3gQJ013PceFCRL+4uLzYmbAA3LTmg26JuvIMbmXLfR7beoq+diaEcYvNLDb9YAaUlQeFah45eooeSwSRKGMJMNpDqUIyTWCmh2sWUDChx2gd3cBce8gKYOVEEDM+7gMXIP8J4qWKYf2NrJU4tYY1x9j/LbECyT2I8dbjYC9iGJkIcwEiqRoZQ0QIPQQs3iSPX62gKJ2Ip8ZHbLkQJW1vVIRtKg0RQ2kTRmL6oYotj4EVr1d6nlvsrAoHDfEFyFopRXnIc99JNGn5p8fRippZ8dtkhhRe8tPn9KR6vdRT83P/+2JP6W+r01dlr24XNsUe/WQ4UwdjdmzjYnIOHsSlWq825qAWKh5j3qU9cxs9BaOxlk/hoQnxuOEPoe1Vv+pVAI+Q2kKxes6I3bWwErY=
-  # AWS_SECRET_ACCESS_KEY
-  - secure: 5tdcAGjnfMASpT8/1bDjFHyo0F84eB1qxaXHlcJ9TUn3LaHPEWfFbbACzdNxe9UmlJkdbwQZua6qXnzB6xfl4VAjwAjmLkzU2CpPZQo1i+5UeFmaXNC5JgdYcFSHi7sXcOPQ9eq2Te8OP5rcABs/TuiHr8BEcjvHpmtIT+/dHFmMxJVziJkIMDpEQDv5wM04a2m5EpqmJPf/hDa2J1IoKVV3MlVle1m446susFySIsy3Uf2W0p6PT7BbUGMphIOMQ8v1SnK8ZqXSxyMfFgPGJz1avGlV28ylbckiPPEmXM6CPx0qBeebVaqwLz2UPjDeqoJQMRuxPpUCCmEzkjvHgBJFiLjmOhZ1k+uSNRQQO4iNhCqGVBoTkNAUUDPEOxaHmwofD7yiSlI7jDGUh3eCQ1P3LZ5OCCGA391KF41k79iWuIJW7nxDNWnKxxOapj7LZYDVnYUVUfoh98HDuEY5XsTgUfHOuSj+NFOi09uS9eYSWEYA4TlV2pRFlzqiNrH8Blx6uTmfowEGCUBEAY2basTZHZxUt8nUH+JTSAgSwg8Ef6n81oOtjj5lrDSSm/W+qGBxZY/KrjDqdu8QgOuQgsBvVPzfLEGHBCeQg+2fPx+rWIkgywHBnGFQYvZnoUJXGTrv+UjwrT91qQChNGP+Zi0Cs3wX1wwgppW7CSuhaCQ=
-  # EMAIL_PASSWORD
-  - secure: Z6m1DLjccXmnjJjx6j0emY5c1d57y+i9e7kTAewx7nN4dXCaKCRcRncga9SwmY05GO98xd86D2CNtEFqp723A9gnExh9WW5D+7l3FT0EZ3zB/19qlfYdnDcvn7PKAJ38VXRPj88EoDqfQS8VAfn4MV498pX4zKV/bBda3xwNZRLIV0MVHfL4F3m2Brk+gCaHHdjsTOTBUZbro64qQxZKaqdmL2lpq2FArUPKZAeM5EnrM/xM7b8teueXaB4dg8I5GXZFeaTlvXB1HlqJYfQDMtOOpga13H8LUEPnetz2JX5xfcGYgETDel+wylg+vmNcB0U4vgCRi00KFHacah7wcPwt+GAdkY+KVdsPtVBgCgzypPFEYcH2CVVPh+QFiMW1syudHKpOPbeBBtZI96Xv+7wWUxfepUnHRLw186wWxJE86eGswfcLZD1UXDmpdnGZ2uL0Rdlixwx7gA02c/tw4vlZZdbsA4uzW8SDgNDGZ1xUN6QqDOOknviSVt0dgVybIddxgZug013nGGaKsYx7scFMV0VfV67KEY1eGwh3Wtl6xYNAinS50/uOU2raM6J+XMnDPg3nfPal4ivRsNOqQuNXdjMaL6dZxcizdcna+n61aLh6CdqZ6UfxxXv4FjVuhqhI3oXPVOnyly5CyJvbU/h/yefdLRAqr//dAzt7RTU=
+    - NODE_ENV=test
+    - DOCKER_TAG=${TRAVIS_COMMIT::8}
+    - DOCKER_COMPOSE_VERSION=1.20.1
+    # DOCKER_USER
+    - secure: m4jgTUSPYMrOQZYo5TqSmn5j9qFdEdekzRGoK+k4H+rFynEa6vwm2fz6nf0dIAaMjLwV+R+yBO6ezN4dPyLzfZRxlZ2mo16emKvaiTDxx+p3WhA0f8QldmzhwNdsMVTMJCr9v8xLguQaF8+OX8XViibwpTirDSqykxNkbxlkjWa3UG9U6zh8jmiTg2AXiivZelzM+nRngUfGDXy3+MowP3BMsbfVnonsmtkoFcRixj+urPZ2Y/ebCdnsng7kKz29726dL4v4UFSLLK95kgvdGbH4vVfB+Y9uJeJGsnjW2sr12GRiPI5lsUOWt3xbr8v9PKB+9881U2BmA9SjJnf1tvceJiawfbg66k1IYVQ287rtrgtdjTdKVIkfkgP2M9BVgHPuRilb7KAuMFDhBKAZZLTPnGHsWyKeqjzgNcIx3blcTCW+qqgJvlYlzWi4xRXutCdrxqz0q6Ii3SUym2dmcLDmqN7dxl92Rd/EhPXfvrftRtfwpdBx5VWPZoCnFdM3Ko/H0ZVRqZRUdmIhgYCS0obM8Yp6MKjER2izyJcNEdcZ/DxnLoML2tpSft3wjukbZUDAGwkqwva0hdsM2BOakxCtI5sGatU3w7AosTPXSKrU0M1t3a79nlij8xbAb2V7LN2IwRVN8pRXNGjTe6jTg5i17X3aCT4rYwwUQi0t23U=
+    # DOCKER_PASS
+    - secure: GILY37ioGMnTbMXy4Awy3mCROsmKf9j3/7tfC/fuVs+BFjD1wBtMUk7G8d9Br+bp/6uOgud2ZWSJZU2SpFlxyC2XlRjUlOPCGkYtMtfDHkxvA3rHviJORBquqpdEmlQWlFvubeE6r9EemaVtvWLhLV1mInW5wO5b8LvrzDqmgkqpaNgmftVw+7kbZl4H2P8sPRAZt37SK8ptLLq90x45DkGiEO2WNAnLi0TplwtweULAtVKi8KUeYStHqO6luUmS0TNYQjviNQlSlcwCClYKwZ/ls/YWUoRGaZ7DB1+Nv1xSfqlUjW7UOlTePw6zfWODvNCa1ZOtUoRHUDKKVFGnCaQFFgByyQk6ITdafnyJlp3tUZNt3YuRlx/j0Toh4NsDvOTTZCTVsUe+vhASAqON7mFed9TNc+QQ0Y64uZOp5G3s+P7iilLBTMp0oN3zQQeKgpTsTmTCv4HUVQUDvPZMvdiT/4ji6LRQStIBRlTFJDLD0NXR6huS3eOHuJkL+chHjC3k0oL4jdo90kBCTydyS4hILgci2mcSeL7ZyFqzEv0VIlPrb7yTp4w8IrLna3JBCKteWkM7gyyxF6xCxxiFdl2K2pIq9aQ7Vco3JDYpmn4iafn8d/2c73oKwphqkhHhhuhq0ko42W2tzKjBA3s+yCBk3O/9P7dVhJEbAHfeMfI=
+    # MONGO_URI
+    - secure: sxv7nf/OyN0PBEUvjRFGmU0pRa+dbEOnQgDJse7mn+UeubrYAoQ9LVS3BmfvkenZml+Su9qfMg48ApDjb17HwNpbMy0VymzHj1UW4gBXRCM5d2jfmAlyuNJB50IVZ1PYT1WVfzQIULjuYGgYHWzZs5EytpzrpaJT2Bw6IRVVQezj+9YpTM79a11LnGeQa9q9TNiDRhjOgVvWRVj87kqUpPr6G1F9rVhxKdkBY2BSquRw2Ot8awAcD9pobR7NGL8LeprDD3KzMllOgyTMNLkpaxKZrQorEYn3sLtQGWGp5u7ZZXNHsWSR2CYNCqkoeNOkUvoSgdKx7XdP7r3BqkL/bKOyc/rURmzQx4pfpZ1gZCQK4OYPDkvoFnvAKVKYl0Ll0qgXL6QHIod3AK02/yG83rBKuBd0cQmiyKmHyOpc/R97YL11Jr2QriGXRmlmwLGxKuV2iRdnKOTD4ib8tyk5GG4gScieq5TA8y3elmCrSAZ0FJdFDMTtEMQxoD+RouHNaqNUa6cnnNNaLWwkei67PmcEfemH088J18en6omwapSTwDlyHSQcYpvSxuvVoLdy27FwppJ8EUBixcHqKRJhbnfncpZyGpL3nNWMGHqcDW0I+Fw9T3UD5PGsGAO6MFEr6BnQOL95rUh+joYaZPhq887SwfZ0IazzgUEIgyaW55I=
+    # AWS_ACCESS_KEY_ID
+    - secure: Etgdc91EKbOXuWWt5W0e/Qhlxqb6nM/1iTLQzHc65cpJ1rbxXwO2Fq8+ismcL3diLs6JNTzaOwgTYPpTw5MQrY3kO6Uw8uPqDrZb0zwxkp8lHbVbIKefQAzvc3qh3jECoQTxRaurWCwmEPTG1Map/30KHlLBPd1jJ3UwAJDho5ELum0DGrHQ+rnOXSwO8ivBXg14vnkAA1FndoASiGCM4yFHIVKffkn76Ai8B8hlCsl1NUSH+H0oLnm/QEhjMDOc1kkdjwO80OBSKKOAC8syynxa3gQJ013PceFCRL+4uLzYmbAA3LTmg26JuvIMbmXLfR7beoq+diaEcYvNLDb9YAaUlQeFah45eooeSwSRKGMJMNpDqUIyTWCmh2sWUDChx2gd3cBce8gKYOVEEDM+7gMXIP8J4qWKYf2NrJU4tYY1x9j/LbECyT2I8dbjYC9iGJkIcwEiqRoZQ0QIPQQs3iSPX62gKJ2Ip8ZHbLkQJW1vVIRtKg0RQ2kTRmL6oYotj4EVr1d6nlvsrAoHDfEFyFopRXnIc99JNGn5p8fRippZ8dtkhhRe8tPn9KR6vdRT83P/+2JP6W+r01dlr24XNsUe/WQ4UwdjdmzjYnIOHsSlWq825qAWKh5j3qU9cxs9BaOxlk/hoQnxuOEPoe1Vv+pVAI+Q2kKxes6I3bWwErY=
+    # AWS_SECRET_ACCESS_KEY
+    - secure: 5tdcAGjnfMASpT8/1bDjFHyo0F84eB1qxaXHlcJ9TUn3LaHPEWfFbbACzdNxe9UmlJkdbwQZua6qXnzB6xfl4VAjwAjmLkzU2CpPZQo1i+5UeFmaXNC5JgdYcFSHi7sXcOPQ9eq2Te8OP5rcABs/TuiHr8BEcjvHpmtIT+/dHFmMxJVziJkIMDpEQDv5wM04a2m5EpqmJPf/hDa2J1IoKVV3MlVle1m446susFySIsy3Uf2W0p6PT7BbUGMphIOMQ8v1SnK8ZqXSxyMfFgPGJz1avGlV28ylbckiPPEmXM6CPx0qBeebVaqwLz2UPjDeqoJQMRuxPpUCCmEzkjvHgBJFiLjmOhZ1k+uSNRQQO4iNhCqGVBoTkNAUUDPEOxaHmwofD7yiSlI7jDGUh3eCQ1P3LZ5OCCGA391KF41k79iWuIJW7nxDNWnKxxOapj7LZYDVnYUVUfoh98HDuEY5XsTgUfHOuSj+NFOi09uS9eYSWEYA4TlV2pRFlzqiNrH8Blx6uTmfowEGCUBEAY2basTZHZxUt8nUH+JTSAgSwg8Ef6n81oOtjj5lrDSSm/W+qGBxZY/KrjDqdu8QgOuQgsBvVPzfLEGHBCeQg+2fPx+rWIkgywHBnGFQYvZnoUJXGTrv+UjwrT91qQChNGP+Zi0Cs3wX1wwgppW7CSuhaCQ=
+    # EMAIL_PASSWORD
+    - secure: Z6m1DLjccXmnjJjx6j0emY5c1d57y+i9e7kTAewx7nN4dXCaKCRcRncga9SwmY05GO98xd86D2CNtEFqp723A9gnExh9WW5D+7l3FT0EZ3zB/19qlfYdnDcvn7PKAJ38VXRPj88EoDqfQS8VAfn4MV498pX4zKV/bBda3xwNZRLIV0MVHfL4F3m2Brk+gCaHHdjsTOTBUZbro64qQxZKaqdmL2lpq2FArUPKZAeM5EnrM/xM7b8teueXaB4dg8I5GXZFeaTlvXB1HlqJYfQDMtOOpga13H8LUEPnetz2JX5xfcGYgETDel+wylg+vmNcB0U4vgCRi00KFHacah7wcPwt+GAdkY+KVdsPtVBgCgzypPFEYcH2CVVPh+QFiMW1syudHKpOPbeBBtZI96Xv+7wWUxfepUnHRLw186wWxJE86eGswfcLZD1UXDmpdnGZ2uL0Rdlixwx7gA02c/tw4vlZZdbsA4uzW8SDgNDGZ1xUN6QqDOOknviSVt0dgVybIddxgZug013nGGaKsYx7scFMV0VfV67KEY1eGwh3Wtl6xYNAinS50/uOU2raM6J+XMnDPg3nfPal4ivRsNOqQuNXdjMaL6dZxcizdcna+n61aLh6CdqZ6UfxxXv4FjVuhqhI3oXPVOnyly5CyJvbU/h/yefdLRAqr//dAzt7RTU=
 cache:
   directories:
-  - node_modules
+    - node_modules
 jobs:
   include:
-  - stage: Tests
-    before_install:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - docker-compose --version
-    - sudo rm /usr/local/bin/docker-compose
-    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-    - chmod +x docker-compose
-    - sudo mv docker-compose /usr/local/bin
-    - export CHROME_BIN=/usr/bin/google-chrome
-    - sudo apt-get update
-    - sudo apt-get install -y libappindicator1 fonts-liberation
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - sudo dpkg -i google-chrome*.deb
-    - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-    install:
-    - npm install --depth 0
-    script:
-    - npm run lint
-    - npm run api
-    - docker-compose -f docker/compose.yml up --detach
-    # Wait for docker-compose to start app
-    - sleep 60s
-    - docker logs thecardkid/icompass
-    - npm run mocha
-    - ./scripts/wdio-travis.sh
-  - stage: build production docker image
-    if: branch = master
-    script:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - docker build -t $DOCKER_TAG .
-    - export REPO=$DOCKER_USER/icompass
-    - docker images
-    - docker tag $DOCKER_TAG $REPO:latest
-    - docker push $REPO:latest
-  - stage: build staging docker image
-    if: branch = develop
-    script:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - docker build -t $DOCKER_TAG .
-    - export REPO=$DOCKER_USER/icompass
-    - docker images
-    - docker tag $DOCKER_TAG $REPO:develop
-    - docker push $REPO:develop
-  - stage: deploy tag
-    if: tag =~ ^v
-    script:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - docker build -t $DOCKER_TAG .
-    - export REPO=$DOCKER_USER/icompass
-    - docker images
-    - docker tag $DOCKER_TAG $REPO:$TRAVIS_TAG
-    - docker push $REPO:$TRAVIS_TAG
+    - stage: Tests
+      before_install:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - docker-compose --version
+        - sudo rm /usr/local/bin/docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
+        - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+      install:
+        - npm install --depth 0
+      script:
+        - npm run lint
+        - npm run api
+        - docker-compose -f docker/compose.yml up --detach
+        # Wait for docker-compose to start app
+        - npm run mocha
+        - ./scripts/wdio-travis.sh
+    - stage: build production docker image
+      if: branch = master
+      script:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - docker build -t $DOCKER_TAG .
+        - export REPO=$DOCKER_USER/icompass
+        - docker images
+        - docker tag $DOCKER_TAG $REPO:latest
+        - docker push $REPO:latest
+    - stage: build staging docker image
+      if: branch = develop
+      script:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - docker build -t $DOCKER_TAG .
+        - export REPO=$DOCKER_USER/icompass
+        - docker images
+        - docker tag $DOCKER_TAG $REPO:develop
+        - docker push $REPO:develop
+    - stage: deploy tag
+      if: tag =~ ^v
+      script:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - docker build -t $DOCKER_TAG .
+        - export REPO=$DOCKER_USER/icompass
+        - docker images
+        - docker tag $DOCKER_TAG $REPO:$TRAVIS_TAG
+        - docker push $REPO:$TRAVIS_TAG
