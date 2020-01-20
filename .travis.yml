@@ -51,6 +51,7 @@ jobs:
     - docker-compose -f docker/compose.yml up --detach
     # Wait for docker-compose to start app
     - sleep 60s
+    - docker logs thecardkid/icompass
     - npm run mocha
     - ./scripts/wdio-travis.sh
   - stage: build production docker image
