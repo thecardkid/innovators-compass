@@ -6,7 +6,7 @@ addons:
   chrome: stable
 language: node_js
 node_js:
-  - '8'
+  - 8
 env:
   # If the environment variable is needed when running the server, also
   # add it to docker/compose.yml
@@ -47,6 +47,8 @@ jobs:
         - npm run api
         - docker-compose -f docker/compose.yml up --detach
         # Wait for docker-compose to start app
+        - sleep 20
+        - docker logs docker_icompass_1
         - npm run mocha
         - ./scripts/wdio-travis.sh
     - stage: build production docker image
