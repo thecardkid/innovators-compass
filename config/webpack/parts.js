@@ -54,9 +54,6 @@ const uglifyJsPlugin = () => new UglifyJsPlugin({
     safari10: false,
     sourceMap: true,
     mangle: true,
-    compress: {
-      warnings: false,
-    },
     output: {
       comments: false,
       beautify: false,
