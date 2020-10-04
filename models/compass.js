@@ -34,6 +34,7 @@ let compassSchema = mongoose.Schema({
     upvotes: Number,
     altText: String,
   }],
+  password: String,
 });
 
 const isValidColor = (color) => {

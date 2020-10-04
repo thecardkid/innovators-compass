@@ -76,13 +76,14 @@ class LandingPage extends Component {
 
     const topic = this.refs.topic.value;
     const username = this.refs.username.value;
+    const password = this.refs.password.value;
 
     if (!REGEX.CHAR_ONLY.test(username)) {
       return this.toast.error('Username cannot contain spaces or numbers, only letters.');
     }
 
     this.setState({ username });
-    this.socket.emitCreateCompass(topic, username);
+    this.socket.emitCreateCompass(topic, username, password);
   };
 
   automateSetup = (e) => {
@@ -162,10 +163,14 @@ class LandingPage extends Component {
               <p>Your name</p>
               <input id="username"
                      ref="username"
-                     maxLength={15}
+                     maxLength={30}
                      required />
-              <div className={'ic-show-privacy-statement'} onClick={this.modal.alertPrivacyStatement}>
-                <u>Privacy Statement</u>
+              <p>Password (optional) <i className={'material-icons'}>info</i></p>
+              {/*TODO add what is this?*/}
+              <input id="password"
+                     ref="password" />
+              <div className={'ic-show-privacy-statement'}>
+                <u onClick={this.modal.alertPrivacyStatement}>Privacy Statement</u>
               </div>
               <br/>
               <button type={'submit'} id={'user-submit'}>

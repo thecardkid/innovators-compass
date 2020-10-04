@@ -125,9 +125,9 @@ const SocketSingleton = (() => {
       }
     };
 
-    emitCreateCompass = (topic, username) => {
+    emitCreateCompass = (topic, username, password) => {
       if (this.checkConnected()) {
-        this.socket.emit('create compass', { topic, username });
+        this.socket.emit('create compass', { topic, username, password });
       }
     };
 
