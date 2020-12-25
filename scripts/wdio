@@ -40,13 +40,13 @@ done
 
 if [[ "$WEBPACK" -eq 1 ]]; then
     echo "running webpack..." >&2
-    "$IC_ROOT/node_modules/.bin/webpack" --config "$IC_ROOT/config/webpack/prod.js"
+    "$IC_ROOT/scripts/build-webpack"
 fi
 
 echo "Waiting for server to start"
 i="0"
 until $(curl --output /dev/null --silent --head --fail "http://localhost:8080"); do
-    if [ $i -gt 30 ]; then
+    if [[ "$i" -gt 30 ]]; then
         echo "iCompass server not detected. Exiting"
         exit 1
     fi

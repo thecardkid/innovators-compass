@@ -1,0 +1,14 @@
+name: webdriver-tests
+on: push
+jobs:
+  webdriver-tests:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '8.17.0'
+      - run: npm install
+      - run: docker-compose -f docker/compose.yml up --detach
+      - run: sleep 20
+      - run: scripts/wdio --with-webpack
