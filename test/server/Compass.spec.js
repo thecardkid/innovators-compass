@@ -1,12 +1,10 @@
 import 'babel-polyfill';
 import { expect } from 'chai';
-import mongoose from 'mongoose';
-import { Mockgoose } from 'mockgoose';
 import _ from 'underscore';
 
 import Compass from '../../backend/models/compass';
+import initializeDB from '../../backend/lib/db';
 
-const mockgoose = new Mockgoose(mongoose);
 const topic = 'test suite';
 const note = {
   user: 'mocha',
@@ -31,8 +29,7 @@ describe('Compass: models', () => {
   let workspace;
 
   before(async () => {
-    await mockgoose.prepareStorage();
-    mongoose.connect('mongodb://test.com/icompass-test');
+    await initializeDB();
   });
 
   beforeEach(async () => {

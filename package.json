@@ -11,7 +11,7 @@
     "start": "./scripts/run",
     "start-server": "npm run build && node backend/server.js",
     "lint": "./node_modules/.bin/eslint --config config/.eslintrc.js src/ test/ backend/lib/ backend/models/ --ignore-pattern=*.less --quiet",
-    "mocha": "mocha --require @babel/register --timeout 300000 --exit test/server",
+    "mocha": "NODE_ENV=test mocha --require @babel/register --timeout 300000 --exit test/server",
     "api": "mocha --require @babel/register --exit test/api",
     "test": "export NODE_ENV=test && npm run mocha && node test/e2e"
   },
@@ -40,7 +40,7 @@
     "eslint-plugin-webdriverio": "1.0.1",
     "less-loader": "4.1.0",
     "mocha": "5.2.0",
-    "mockgoose": "7.3.5",
+    "mongodb-memory-server": "6.9.2",
     "nodemon": "1.18.6",
     "style-loader": "0.23.1",
     "supertest": "3.0.0",

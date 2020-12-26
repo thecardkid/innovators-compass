@@ -1,40 +1,39 @@
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const mongoose = require('mongoose');
-
 const logger = require('./logger');
 
-const env = process.env.NODE_ENV;
-const options = {
-  autoReconnect: true,
-  reconnectTries: 100,
-  reconnectInterval: 2000,
-};
-
-let db;
-
-switch (env) {
-  case 'production':
-    db = mongoose.connect(process.env.MONGODB_URI, options);
-    logger.info(`Connected to Mongo Lab instance ${process.env.MONGODB_URI.substring(0, 10)}...`);
-    break;
-
-  case 'test':
-    db = mongoose.connect(process.env.MONGODB_URI, options);
-    logger.info('Connected to Test environment');
-    break;
-
-  default:
-    db = mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/compass');
-    logger.info('Connected to local database');
-    break;
+async function mongooseConnect(uri) {
+  return await mongoose.connect(uri, {
+    useNewUrlParser: true,
+    autoReconnect: true,
+    reconnectTries: 100,
+    reconnectInterval: 2000,
+  });
 }
 
-mongoose.connection.on('error', function(e) {
-  logger.error('Could not connect to mongoose', e);
-  throw new Error(e);
-});
+async function initializeInMemoryDB() {
+  const mongod = new MongoMemoryServer();
+  return await mongooseConnect(await mongod.getUri());
+}
 
-mongoose.connection.once('open', function() {
-  logger.info('Mongodb Connection Successful');
-});
+async function initializeDB() {
+  let db;
+  if (process.env.NODE_ENV === 'test') {
+    db = await initializeInMemoryDB();
+  } else {
+    db = await mongooseConnect(process.env.MONGODB_URI || 'mongodb://localhost/compass');
+  }
+  if (db.connections.length) {
+    const conn = db.connections[0];
+    logger.info(`Connected to Mongo instance ${conn.host}:${conn.port}`);
+  }
 
-module.exports = db;
+  mongoose.connection.on('error', function(e) {
+    logger.error('Could not connect to mongoose', e);
+    throw new Error(e);
+  });
+  mongoose.set('useFindAndModify', false);
+  return db;
+}
+
+module.exports = initializeDB;
