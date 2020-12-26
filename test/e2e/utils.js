@@ -8,24 +8,24 @@ const { expect } = chai;
 const { STICKY_COLORS } = require('../../lib/constants');
 
 const setup = () => {
-  browser.setViewportSize({ width: 2000, height: 2000 });
+  browser.setWindowSize(2000, 2000);
   browser.url('http://localhost:8080');
-  browser.waitForVisible('body', 1000);
+  $('body').waitForDisplayed({ timeout: 1000 });
   // TODO compass-center is legacy (from before "topic" existed).
   // Rename to compass-topic
-  browser.setValue('#compass-center', 'webdriverio');
-  browser.setValue('#username', 'sandbox');
-  browser.click('button[type=submit]');
-  browser.waitForVisible('#ic-modal', 1000);
+  $('#compass-center').setValue('webdriverio');
+  $('#username').setValue('sandbox');
+  $('button[type=submit]').click();
+  $('#ic-modal').waitForDisplayed({ timeout: 1000 });
   // do not email
-  browser.click('#ic-modal-cancel');
-  browser.waitForVisible('#compass', 1000);
+  $('#ic-modal-cancel').click();
+  $('#compass').waitForDisplayed({ timeout: 1000 });
   // set center
-  browser.waitForVisible('#ic-modal');
+  $('#ic-modal').waitForDisplayed({ timeout: 1000 });
   // this is confusing. The input is setting the center of the
   // compass, not the topic
-  browser.setValue('#ic-modal-input', 'topic');
-  browser.click('#ic-modal-confirm');
+  $('#ic-modal-input').setValue('topic');
+  $('#ic-modal-confirm').click();
   // wait for animation
   browser.pause(2000);
 };
@@ -34,19 +34,20 @@ const cleanup = () => {
   selectMenuOption(menuActions.deleteWorkspace);
   browser.pause(5000);
   // confirm delete
-  browser.waitForVisible('#ic-modal', 100);
-  browser.click('#ic-modal-confirm');
+  $('#ic-modal').waitForDisplayed({ timeout: 100 });
+  const $confirm = $('#ic-modal-confirm');
+  $confirm.click();
   // confirm thank-you-note
-  browser.waitForVisible('#ic-modal', 5000);
-  browser.click('#ic-modal-confirm');
+  $('#ic-modal').waitForDisplayed({ timeout: 5000 });
+  $confirm.click();
 };
 
 // TODO deprecate switchMode and replace with selectSubmenuOption
 const switchMode = (modeId) => {
   browser.click('button.ic-workspace-button');
-  browser.waitForVisible('div.ic-workspace-menu');
+  browser.waitForDisplayed('div.ic-workspace-menu', 1000);
   browser.moveTo(browser.elements('div.has-more').value[3].ELEMENT, 10, 10);
-  browser.waitForVisible('div.ic-modes-submenu');
+  browser.waitForDisplayed('div.ic-modes-submenu', 1000);
   browser.click(modeId);
 };
 
@@ -103,16 +104,16 @@ const menuActions = {
 };
 
 const selectMenuOption = (count) => {
-  browser.click('button.ic-workspace-button');
-  browser.waitForVisible('div.ic-workspace-menu');
-  browser.elements('div.ic-menu-item').value[count].click();
+  $('button.ic-workspace-button').click();
+  $('div.ic-workspace-menu').waitForDisplayed({ timeout: 1000 });
+  $$('div.ic-menu-item')[count].click();
 };
 
 const selectSubmenuOption = ({ submenu, submenuPosition, position }) => {
   browser.click('button.ic-workspace-button');
-  browser.waitForVisible('div.ic-workspace-menu');
+  browser.waitForDisplayed('div.ic-workspace-menu');
   browser.moveTo(browser.elements('div.has-more').value[submenuPosition].ELEMENT, 10, 10);
-  browser.waitForVisible(submenu);
+  browser.waitForDisplayed(submenu);
   browser.elements(`${submenu} div.ic-menu-item`).value[position].click();
 };
 

@@ -10,13 +10,14 @@ exports.config = {
   capabilities: [{
     maxInstances: 1,
     browserName: 'chrome',
-    chromeOptions: {
+    'goog:chromeOptions': {
       args: [
         `--user-agent=${userAgent}`,
         ...(process.env.HEADLESS === '1' ? headlessArgs : []),
       ],
     },
   }],
+  runner: 'local',
   sync: true,
   logLevel: 'silent',
   coloredLogs: true,

@@ -21,7 +21,7 @@
 //       let p = POSITIONS[i];
 //       b.moveToObject('body', p.x, p.y);
 //       b.doDoubleClick();
-//       b.waitForVisible('#ic-note-form');
+//       b.waitForDisplayed('#ic-note-form');
 //       b.setValue('#ic-form-text .ql-editor', TEXT);
 //       b.click('button[name=ship]');
 //       b.pause(500);
@@ -33,7 +33,7 @@
 //   it('visual mode toolbar is draggable', () => {
 //     expect('#ic-visual-toolbar').to.not.be.there();
 //     switchMode('#ic-bulk');
-//     b.waitForVisible('#ic-visual-toolbar');
+//     b.waitForDisplayed('#ic-visual-toolbar');
 //
 //     let pos = b.getLocation('#ic-visual-toolbar');
 //
@@ -55,23 +55,23 @@
 //     switchMode('#ic-bulk');
 //     b.moveToObject('#note0', 10, 10);
 //     b.doDoubleClick();
-//     b.waitForVisible('#ic-toast span');
+//     b.waitForDisplayed('#ic-toast span');
 //     expect(b.getAttribute('#ic-toast span', 'class')).to.equal('warning');
 //     expect('#ic-toast span').to.have.text(/can't make changes/);
 //     b.click('#ic-toast span');
-//     b.waitForVisible('#ic-toast span', 1000, true);
+//     b.waitForDisplayed('#ic-toast span', 1000, true);
 //   });
 //
 //   describe('renders correctly', () => {
 //     beforeAll(() => {
 //       switchMode('#ic-standard');
 //       switchMode('#ic-bulk');
-//       b.waitForVisible('#ic-visual-toolbar');
+//       b.waitForDisplayed('#ic-visual-toolbar');
 //     });
 //
 //     it('bulk deleting exits visual mode', () => {
 //       b.click('button#ic-bulk-delete');
-//       b.waitForVisible('#ic-modal');
+//       b.waitForDisplayed('#ic-modal');
 //       expect('#ic-modal-body').to.have.text(/Are you sure/);
 //       b.click('#ic-modal-confirm');
 //       expect('#ic-visual-toolbar').to.not.be.visible();
@@ -82,7 +82,7 @@
 //     beforeEach(() => {
 //       switchMode('#ic-standard');
 //       switchMode('#ic-bulk');
-//       b.waitForVisible('#ic-visual-toolbar');
+//       b.waitForDisplayed('#ic-visual-toolbar');
 //     });
 //
 //     it('sticky note coloring', () => {
@@ -116,7 +116,7 @@
 //     beforeEach(() => {
 //       switchMode('#ic-standard');
 //       switchMode('#ic-bulk');
-//       b.waitForVisible('#ic-visual-toolbar');
+//       b.waitForDisplayed('#ic-visual-toolbar');
 //     });
 //
 //     it('setup', () => {
@@ -262,7 +262,7 @@
 //     b.click('#note2');
 //     b.click('#note3');
 //     b.click('button#ic-bulk-delete');
-//     b.waitForVisible('#ic-modal');
+//     b.waitForDisplayed('#ic-modal');
 //     expect('#ic-modal-body').to.have.text(/Are you sure/);
 //     b.click('#ic-modal-confirm');
 //     b.pause(1000);

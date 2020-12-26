@@ -24,7 +24,7 @@ describe('view modes', () => {
 
     b.moveToObject('body', 100, 100);
     b.doDoubleClick();
-    b.waitForVisible('#ic-note-form');
+    b.waitForDisplayed('#ic-note-form');
     b.setValue('#ic-form-text .ql-editor', 'this is a note');
     b.click('button[name=ship]');
     b.pause(200);
@@ -32,7 +32,7 @@ describe('view modes', () => {
 
     b.moveToObject('body', 300, 100);
     b.doDoubleClick();
-    b.waitForVisible('#ic-note-form');
+    b.waitForDisplayed('#ic-note-form');
     b.setValue('#ic-form-text .ql-editor', 'this is a note');
     b.click('button[name=draft]');
     b.pause(200);
@@ -46,7 +46,7 @@ describe('view modes', () => {
     expect(b.getUrl()).to.equal(`${editURL}/sandbox`);
 
     selectMenuOption(menuActions.share);
-    b.waitForVisible('.ic-share');
+    b.waitForDisplayed('.ic-share');
     const viewCodeRegex = /\/compass\/view\/([0-9a-zA-Z]{8})/;
     const viewMatch = viewCodeRegex.exec(b.getValue('input#ic-view-link'));
     expect(viewMatch).to.have.length(2);
@@ -59,7 +59,7 @@ describe('view modes', () => {
   describe('view-only mode', () => {
     it('view-only mode from link', () => {
       b.url(viewURL);
-      b.waitForVisible('#compass');
+      b.waitForDisplayed('#compass');
       expect('#center').to.be.visible();
       expect('#vline').to.be.visible();
       expect('#hline').to.be.visible();
@@ -138,7 +138,7 @@ describe('view modes', () => {
   describe('edit mode', () => {
     it('valid username', () => {
       b.url(`${editURL}/sandbox`);
-      b.waitForVisible('#compass');
+      b.waitForDisplayed('#compass');
 
       expect('#center').to.be.visible();
       expect('#vline').to.be.visible();
@@ -150,24 +150,24 @@ describe('view modes', () => {
 
     it('invalid code and invalid username', () => {
       b.url('http://localhost:8080/compass/edit/12345/,,,');
-      b.waitForVisible('#ic-modal');
+      b.waitForDisplayed('#ic-modal');
 
       expect('#ic-modal-body').to.have.text(/Your code is not valid/);
       expect('#ic-modal-body').to.have.text(/You will be redirected/);
 
       b.click('#ic-modal-confirm');
-      b.waitForVisible('#ic-landing');
+      b.waitForDisplayed('#ic-landing');
       expect(b.getUrl()).to.equal('http://localhost:8080/');
     });
 
     it('with editCode for view-only mode', () => {
       b.url(`http://localhost:8080/compass/view/${editCode}/sandbox`);
-      b.waitForVisible('#ic-modal');
+      b.waitForDisplayed('#ic-modal');
 
       expect('#ic-modal-body').to.have.text(/Workspace not found/);
 
       b.click('#ic-modal-confirm');
-      b.waitForVisible('#ic-landing');
+      b.waitForDisplayed('#ic-landing');
 
       expect(b.getUrl()).to.equal('http://localhost:8080/');
     });
@@ -175,27 +175,27 @@ describe('view modes', () => {
     describe('username input', () => {
       beforeEach(() => {
         b.url(editURL);
-        b.waitForVisible('#ic-modal');
+        b.waitForDisplayed('#ic-modal');
       });
 
       it('bad username', () => {
         expect('#ic-modal-body').to.have.text(/Welcome/);
         b.setValue('#ic-modal-input', 'sandbox2');
         b.click('#ic-modal-confirm');
-        b.waitForVisible('#ic-toast');
+        b.waitForDisplayed('#ic-toast');
         expect('#ic-toast').to.have.text(/Username must be fewer/);
       });
 
       it('missing username', () => {
         b.click('#ic-modal-confirm');
-        b.waitForVisible('#ic-toast');
+        b.waitForDisplayed('#ic-toast');
         expect('#ic-toast').to.have.text(/You can't leave this empty/);
       });
 
       it('valid username', () => {
         b.setValue('#ic-modal-input', 'sandbox');
         b.click('#ic-modal-confirm');
-        b.waitForVisible('#compass');
+        b.waitForDisplayed('#compass');
         expect('#center').to.be.visible();
         expect('#vline').to.be.visible();
         expect('#hline').to.be.visible();

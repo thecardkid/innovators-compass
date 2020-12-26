@@ -53,7 +53,7 @@ describe('workspace menu', () => {
 
     it('explain modes', () => {
       selectSubmenuOption(menuActions.explainModes);
-      b.waitForVisible('#ic-modal');
+      b.waitForDisplayed('#ic-modal');
       expect('#ic-modal-body').to.have.text(/What are these modes/);
       b.click('#ic-modal-confirm');
     });
@@ -70,8 +70,8 @@ describe('workspace menu', () => {
 
     it('as screenshot', () => {
       selectSubmenuOption(menuActions.screenshot);
-      b.waitForVisible('div.ic-screenshot.ic-dynamic-modal');
-      b.waitForVisible('div#exported-png canvas', 10000);
+      b.waitForDisplayed('div.ic-screenshot.ic-dynamic-modal');
+      b.waitForDisplayed('div#exported-png canvas', 10000);
       expect('div#exported-png p').to.have.text(/Right click/);
       b.click('button.ic-close-window');
     });
@@ -108,7 +108,7 @@ describe('workspace menu', () => {
         // TODO make selector stricter
         b.click('button.accept');
         b.refresh();
-        b.waitForVisible('#center', 10000);
+        b.waitForDisplayed('#center', 10000);
         const { x, y } = b.getLocation('#center');
         expect(x).to.be.below(defaultCenterX);
         expect(y).to.be.below(defaultCenterY);
@@ -129,7 +129,7 @@ describe('workspace menu', () => {
     describe('dark theme', () => {
       it('can turn on', () => {
         b.click('.ic-workspace-button');
-        b.waitForVisible('div.ic-workspace-menu');
+        b.waitForDisplayed('div.ic-workspace-menu');
         b.click('span.slider');
         b.pause(200);
         expect('.dark-theme').to.have.count(2);
@@ -137,13 +137,13 @@ describe('workspace menu', () => {
 
       it('saves in local storage', () => {
         b.refresh();
-        b.waitForVisible('#compass');
+        b.waitForDisplayed('#compass');
         expect('.dark-theme').to.have.count(2);
       });
 
       it('can turn off', () => {
         b.click('.ic-workspace-button');
-        b.waitForVisible('div.ic-workspace-menu');
+        b.waitForDisplayed('div.ic-workspace-menu');
         b.click('span.slider');
         b.pause(200);
         expect('.dark-theme').to.have.count(0);
@@ -151,7 +151,7 @@ describe('workspace menu', () => {
 
       it('saves in local storage again', () => {
         b.refresh();
-        b.waitForVisible('#compass');
+        b.waitForDisplayed('#compass');
         expect('.dark-theme').to.have.count(0);
       });
     });
@@ -159,20 +159,20 @@ describe('workspace menu', () => {
     describe('email reminder', () => {
       it('wrong email format displays error message', () => {
         selectMenuOption(menuActions.email);
-        b.waitForVisible('#ic-modal');
+        b.waitForDisplayed('#ic-modal');
         expect('#ic-modal-body').to.have.text(/Receive a Link/);
         expect('#ic-modal-cancel').to.be.visible();
         expect(b.getAttribute('#ic-modal-input', 'placeholder')).to.be.empty;
         b.setValue('#ic-modal-input', 'fakeemail');
         b.click('#ic-modal-confirm');
-        b.waitForVisible('#ic-toast');
+        b.waitForDisplayed('#ic-toast');
         expect('#ic-toast').to.have.text(/not a valid email/);
       });
 
       it('valid email shows toast', () => {
         b.setValue('#ic-modal-input', 'fakeemail@valid.com');
         b.click('#ic-modal-confirm');
-        b.waitForVisible('#ic-toast span');
+        b.waitForDisplayed('#ic-toast span');
         expect('#ic-toast span').to.have.text(/link to this workspace/);
       });
     });
@@ -216,11 +216,11 @@ describe('workspace menu', () => {
 
       it('toast displays success status', () => {
         selectMenuOption(menuActions.bookmark);
-        b.waitForVisible('#ic-modal');
+        b.waitForDisplayed('#ic-modal');
         expect('#ic-modal-body').to.have.text(/Bookmarks give you quick access/);
         b.setValue('#ic-modal-input', 'My bookmark');
         b.click('#ic-modal-confirm');
-        b.waitForVisible('#ic-toast span');
+        b.waitForDisplayed('#ic-toast span');
         expect(b.getAttribute('#ic-toast span', 'class')).to.equal('success');
         expect('#ic-toast span').to.have.text(/Bookmarked/);
         b.click('#ic-toast span');
@@ -245,7 +245,7 @@ describe('workspace menu', () => {
 
         it('remembers user showed bookmarks', () => {
           b.refresh();
-          b.waitForVisible('#bookmark-button');
+          b.waitForDisplayed('#bookmark-button');
           expect(b.getCssProperty('#ic-bookmarks', 'left').value).to.equal('0px');
           expect(b.getCssProperty('#bookmark-button', 'left').value).to.equal('200px');
         });
@@ -275,7 +275,7 @@ describe('workspace menu', () => {
 
         it('bookmark leads to correct workspace', () => {
           b.click('.ic-saved a');
-          b.waitForVisible('#compass');
+          b.waitForDisplayed('#compass');
           expect(b.getUrl()).to.contain('http://localhost:8080/compass/edit');
         });
 
@@ -285,7 +285,7 @@ describe('workspace menu', () => {
 
         it('bookmark prompt indicates workspace is already bookmarked', () => {
           selectMenuOption(menuActions.bookmark);
-          b.waitForVisible('#ic-modal');
+          b.waitForDisplayed('#ic-modal');
           expect('#ic-modal-body').to.have.text(/Already bookmarked/);
           b.click('#ic-modal-confirm');
           b.back();
@@ -295,7 +295,7 @@ describe('workspace menu', () => {
           b.click('.ic-saved #arrow');
           b.pause(500);
           b.click('button.edit');
-          b.waitForVisible('#ic-modal');
+          b.waitForDisplayed('#ic-modal');
           expect('#ic-modal-body').to.contain.text(/Enter a new name/);
           b.setValue('#ic-modal-input', 'Changed name');
           b.click('#ic-modal-confirm');
@@ -304,7 +304,7 @@ describe('workspace menu', () => {
 
         it('can remove bookmark', () => {
           b.click('button.remove');
-          b.waitForVisible('#ic-modal');
+          b.waitForDisplayed('#ic-modal');
           expect('#ic-modal-body').to.have.text(/Are you sure/);
           b.click('#ic-modal-confirm');
           expect('.ic-saved').to.not.be.there();
@@ -375,17 +375,17 @@ describe('workspace menu', () => {
         describe('emailing bookmarks', () => {
           it('toasts error if email invalid', () => {
             b.click('#email');
-            b.waitForVisible('#ic-modal');
+            b.waitForDisplayed('#ic-modal');
             b.setValue('#ic-modal-input', 'invalidemail@');
             b.click('#ic-modal-confirm');
-            b.waitForVisible('#ic-toast');
+            b.waitForDisplayed('#ic-toast');
             expect('#ic-toast').to.have.text(/not a valid email/);
           });
 
           it('toast success if email valid', () => {
             b.setValue('#ic-modal-input', 'fakeemail@test.com');
             b.click('#ic-modal-confirm');
-            b.waitForVisible('#ic-toast');
+            b.waitForDisplayed('#ic-toast');
             expect('#ic-toast').to.have.text(/link to this workspace/);
           });
         });
@@ -399,7 +399,7 @@ describe('workspace menu', () => {
 
         it('remembers user hid bookmarks', () => {
           b.refresh();
-          b.waitForVisible('#bookmark-button');
+          b.waitForDisplayed('#bookmark-button');
           expect(b.getCssProperty('#ic-bookmarks', 'left').value).to.equal('-200px');
           expect(b.getCssProperty('#bookmark-button', 'left').value).to.equal('0px');
         });

@@ -16,21 +16,21 @@ describe('context menus', () => {
   const x = 100, y = 200;
 
   beforeEach(() => {
-    b.moveToObject('#note0', 10, 10);
+    b.$('#note0').moveTo(10, 10);
     b.rightClick();
-    b.waitForVisible('.context-menu');
+    b.waitForDisplayed('.context-menu');
   });
 
   afterEach(() => {
-    b.moveToObject('body', 800, 800);
+    b.$('body').moveTo(800, 800);
     b.leftClick();
   });
 
   describe('text note context menu', () => {
     beforeAll(() => {
-      b.moveToObject('body', x, y);
+      b.$('body').moveTo(x, y);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       b.setValue('#ic-form-text .ql-editor', 'text note');
       b.click('button[name=ship]');
       b.pause(200);
@@ -89,11 +89,11 @@ describe('context menus', () => {
 
   describe('image note context menu', () => {
     beforeAll(() => {
-      b.moveToObject('body', x, y);
+      b.$('body').moveTo(x, y);
       b.keys('Shift');
       b.doDoubleClick();
       b.keys('Shift');
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       b.setValue('#ic-form-text', imageUrl);
       b.click('button[name=ship]');
       b.pause(200);
@@ -123,7 +123,7 @@ describe('context menus', () => {
       b.pause(200);
       expect('#ic-modal-image').to.be.visible();
       expect(b.getAttribute('#ic-modal-image img', 'src')).to.contain('cesarsway');
-      b.moveToObject('#ic-modal-image img', -10, -10);
+      b.$('#ic-modal-image img').moveTo(-10, -10);
       b.leftClick();
       expect('#ic-modal-image').to.not.be.visible();
     });
@@ -151,16 +151,16 @@ describe('context menus', () => {
 
   describe('doodle note context menu', () => {
     beforeAll(() => {
-      b.moveToObject('body', x, y);
+      b.$('body').moveTo(x, y);
       b.keys('Alt');
       b.doDoubleClick();
       b.keys('Alt');
-      b.waitForVisible('#ic-doodle-form');
+      b.waitForDisplayed('#ic-doodle-form');
 
       // draw doodle
-      b.moveToObject('#ic-doodle', 155, 75);
+      b.$('#ic-doodle').moveTo(155, 75);
       b.buttonDown(0);
-      b.moveToObject('#ic-doodle', 255, 175);
+      b.$('#ic-doodle').moveTo(255, 175);
       b.buttonUp(0);
       b.pause(200);
 
@@ -191,7 +191,7 @@ describe('context menus', () => {
       b.pause(200);
       expect('#ic-modal-image').to.be.visible();
       expect(b.getAttribute('#ic-modal-image img', 'src')).to.include('data:image/png;base64');
-      b.moveToObject('#ic-modal-image img', -10, -10);
+      b.$('#ic-modal-image img').moveTo(-10, -10);
       b.leftClick();
       expect('#ic-modal-image').to.not.be.visible();
     });
@@ -219,9 +219,9 @@ describe('context menus', () => {
 
   describe('text draft context menu', () => {
     beforeAll(() => {
-      b.moveToObject('body', x, y);
+      b.$('body').moveTo(x, y);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       b.setValue('#ic-form-text .ql-editor', 'text note');
       b.click('button[name=draft]');
       b.pause(200);
@@ -274,11 +274,11 @@ describe('context menus', () => {
 
   describe('image draft context menu', () => {
     beforeAll(() => {
-      b.moveToObject('body', x, y);
+      b.$('body').moveTo(x, y);
       b.keys('Shift');
       b.doDoubleClick();
       b.keys('Shift');
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       b.setValue('#ic-form-text', imageUrl);
       b.click('button[name=draft]');
       b.pause(200);
@@ -307,7 +307,7 @@ describe('context menus', () => {
       b.pause(200);
       expect('#ic-modal-image').to.be.visible();
       expect(b.getAttribute('#ic-modal-image img', 'src')).to.contain('cesarsway');
-      b.moveToObject('#ic-modal-image img', -10, -10);
+      b.$('#ic-modal-image img').moveTo(-10, -10);
       b.leftClick();
       expect('#ic-modal-image').to.not.be.visible();
     });
@@ -335,16 +335,16 @@ describe('context menus', () => {
 
   describe('doodle note context menu', () => {
     beforeAll(() => {
-      b.moveToObject('body', x, y);
+      b.$('body').moveTo(x, y);
       b.keys('Alt');
       b.doDoubleClick();
       b.keys('Alt');
-      b.waitForVisible('#ic-doodle-form');
+      b.waitForDisplayed('#ic-doodle-form');
 
       // draw doodle
-      b.moveToObject('#ic-doodle', 155, 75);
+      b.$('#ic-doodle').moveTo(155, 75);
       b.buttonDown(0);
-      b.moveToObject('#ic-doodle', 255, 175);
+      b.$('#ic-doodle').moveTo(255, 175);
       b.buttonUp(0);
       b.pause(200);
 
@@ -374,7 +374,7 @@ describe('context menus', () => {
       b.pause(200);
       expect('#ic-modal-image').to.be.visible();
       expect(b.getAttribute('#ic-modal-image img', 'src')).to.include('data:image/png;base64');
-      b.moveToObject('#ic-modal-image img', -10, -10);
+      b.$('#ic-modal-image img').moveTo(-10, -10);
       b.leftClick();
       expect('#ic-modal-image').to.not.be.visible();
     });

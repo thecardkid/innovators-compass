@@ -18,7 +18,7 @@ const actions = {
 
 const selectHelpOption = (count) => {
   b.click('button.ic-help-button');
-  b.waitForVisible('div.ic-help-menu');
+  b.waitForDisplayed('div.ic-help-menu');
   b.elements('div.ic-menu-item').value[count].click();
 };
 
@@ -32,7 +32,7 @@ describe('help menu', () => {
 
   it('prompt', () => {
     selectHelpOption(actions.prompt);
-    b.waitForVisible('#ic-modal');
+    b.waitForDisplayed('#ic-modal');
     expect('#ic-modal-body').to.have.text(/Innovator's Compass/);
     b.click('#ic-modal-confirm');
   });
@@ -46,28 +46,28 @@ describe('help menu', () => {
 
   it('about us', () => {
     selectHelpOption(actions.about);
-    b.waitForVisible('#ic-modal');
+    b.waitForDisplayed('#ic-modal');
     expect('#ic-modal-body').to.have.text(/Hi!/);
     b.click('#ic-modal-confirm');
   });
 
   it('release notes', () => {
     selectHelpOption(actions.release);
-    b.waitForVisible('#ic-modal');
+    b.waitForDisplayed('#ic-modal');
     expect('#ic-modal-body').to.have.text(/Release/);
     b.click('#ic-modal-confirm');
   });
 
   it('privacy statement', () => {
     selectHelpOption(actions.privacy);
-    b.waitForVisible('#ic-modal');
+    b.waitForDisplayed('#ic-modal');
     expect('#ic-modal-body').to.have.text(/Privacy Statement/);
     b.click('#ic-modal-confirm');
   });
 
   it('contact', () => {
     selectHelpOption(actions.contact);
-    b.waitForVisible('.ic-dynamic-modal');
+    b.waitForDisplayed('.ic-dynamic-modal');
     expect('.ic-dynamic-modal .contents').to.have.text(/I'd love to hear from you/);
     b.click('button.ic-close-window');
   });

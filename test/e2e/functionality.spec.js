@@ -54,7 +54,7 @@ describe('basic functionality', () => {
     it('edit', () => {
       b.moveToObject('.ic-sticky-note', 5, 5);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       b.setValue('#ic-form-text .ql-editor', 'A principle');
       b.click('button[name=ship]');
       b.pause(200);
@@ -85,7 +85,7 @@ describe('basic functionality', () => {
       it('rejecting alert preserves note', () => {
         b.moveToObject('#note0', 74, 2);
         b.leftClick();
-        b.waitForVisible('#ic-modal');
+        b.waitForDisplayed('#ic-modal');
         expect('#ic-modal-body').to.have.text(/Are you sure/);
         b.click('#ic-modal-cancel');
         expect('div.ic-sticky-note').to.have.count(1);
@@ -94,7 +94,7 @@ describe('basic functionality', () => {
       it('accepting alert deletes note', () => {
         b.moveToObject('#note0', 74, 2);
         b.leftClick();
-        b.waitForVisible('#ic-modal');
+        b.waitForDisplayed('#ic-modal');
         b.click('#ic-modal-confirm');
         b.pause(500);
         expect('div.ic-sticky-note').to.have.count(0);
@@ -106,7 +106,7 @@ describe('basic functionality', () => {
     beforeEach(() => {
       b.moveToObject('#center', 10, 10);
       b.doDoubleClick();
-      b.waitForVisible('#ic-modal');
+      b.waitForDisplayed('#ic-modal');
     });
 
     it('clearing value and submitting does nothing', () => {
@@ -142,16 +142,16 @@ describe('basic functionality', () => {
       // pretty much copy-pasted from test/e2e/utils:setup. Can't call
       // setup directly because of the long topic name.
       b.url('http://localhost:8080');
-      b.waitForVisible('body', 1000);
+      b.waitForDisplayed('body', 1000);
       b.setValue('#compass-center', 'a really long topic name that is definitely over thirty-five characters of text');
       b.setValue('#username', 'sandbox');
       b.click('button[type=submit]');
-      b.waitForVisible('#ic-modal', 1000);
+      b.waitForDisplayed('#ic-modal', 1000);
       // do not email
       b.click('#ic-modal-cancel');
-      b.waitForVisible('#compass', 1000);
+      b.waitForDisplayed('#compass', 1000);
       // set center
-      b.waitForVisible('#ic-modal');
+      b.waitForDisplayed('#ic-modal');
       browser.setValue('#ic-modal-input', 'center');
       browser.click('#ic-modal-confirm');
       // wait for animation

@@ -7,19 +7,20 @@ const b = browser;
 
 const { setup, cleanup } = require('./utils');
 const DOG_PHOTO_LINK = 'https://www.cesarsway.com/sites/newcesarsway/files/styles/large_article_preview/public/Common-dog-behaviors-explained.jpg?itok=FSzwbBoi';
-const POSITIONS = [{ x: 400, y: 200 }, { x: 500, y: 200 }];
 
 describe('draft mode', () => {
   beforeAll(() => {
-    setup();
-    for (let i = 0; i < POSITIONS.length; i++) {
-      let p = POSITIONS[i];
+    setup(b);
+    const coords = [{ x: 400, y: 200 }, { x: 500, y: 200 }];
+    for (let i = 0; i < coords.length; i++) {
+      let p = coords[i];
       b.pause(100);
-      b.moveToObject('body', p.x, p.y);
-      b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
-      b.setValue('#ic-form-text .ql-editor', 'This is a note');
-      b.click('button[name=ship]');
+      $('body').moveTo(p.x, p.y);
+      b.buttonPress
+      // b.doDoubleClick();
+      $('#ic-note-form').waitForDisplayed({ timeout: 1000 });
+      $('#ic-form-text .ql-editor').setValue('This is a note');
+      $('button[name=ship]').click();
       b.pause(500);
     }
   });
@@ -28,9 +29,9 @@ describe('draft mode', () => {
 
   describe('text draft', () => {
     it('create', () => {
-      b.moveToObject('body', 200, 500);
-      b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      $('body').moveTo(200, 500).doubleClick();
+      // b.doDoubleClick();
+      b.waitForDisplayed('#ic-note-form');
       b.setValue('#ic-form-text .ql-editor', 'draft 0');
       b.click('button[name=draft]');
       b.pause(200);
@@ -40,9 +41,9 @@ describe('draft mode', () => {
     });
 
     it('form has correct heading', () => {
-      b.moveToObject('#note0', 10, 10);
+      $('#note0').moveTo(10, 10);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       expect('h1.title').to.have.text(/Edit this draft/);
       expect('.ic-form-palette').to.not.be.visible();
     });
@@ -56,9 +57,9 @@ describe('draft mode', () => {
 
     it('can drag draft', () => {
       const oldPos = b.getLocation('#note0');
-      b.moveToObject('#note0', 10, 10);
+      $('#note0').moveTo(10, 10);
       b.buttonDown(0);
-      b.moveToObject('#note0', -40, -40);
+      $('#note0').moveTo(-40, -40);
       b.buttonUp(0);
       const newPosition = b.getLocation('#note0');
 
@@ -68,9 +69,9 @@ describe('draft mode', () => {
 
     describe('can still edit non-draft', () => {
       it('form has correct title and does not have draft button', () => {
-        b.moveToObject('#note1', 10, 10);
+        $('#note1').moveTo(10, 10);
         b.doDoubleClick();
-        b.waitForVisible('#ic-note-form');
+        b.waitForDisplayed('#ic-note-form');
         expect('h1.title').to.have.text(/Edit this note/);
         expect('button[name=draft]').to.not.be.visible();
       });
@@ -83,9 +84,9 @@ describe('draft mode', () => {
 
       it('can drag', () => {
         const oldPos = b.getLocation('#note1');
-        b.moveToObject('#note1', 10, 10);
+        $('#note1').moveTo(10, 10);
         b.buttonDown(0);
-        b.moveToObject('#note1', 30, 30);
+        $('#note1').moveTo(30, 30);
         b.buttonUp(0);
         const newPosition = b.getLocation('#note1');
 
@@ -97,11 +98,11 @@ describe('draft mode', () => {
 
   describe('image draft', () => {
     it('image form should render correctly', () => {
-      b.moveToObject('body', 400, 500);
+      $('body').moveTo(400, 500);
       b.keys('Shift');
       b.doDoubleClick();
       b.keys('Shift');
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       b.setValue('#ic-form-text', DOG_PHOTO_LINK);
       b.click('button[name=draft]');
       b.pause(200);
@@ -116,9 +117,9 @@ describe('draft mode', () => {
     });
 
     it('edit image draft', () => {
-      b.moveToObject('div.ic-img', 20, 20);
+      $('div.ic-img').moveTo(20, 20);
       b.doDoubleClick();
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       expect('h1.title').to.have.text(/Edit photo draft/);
       expect('.ic-form-palette').to.not.be.visible();
       expect('#ic-form-text').to.have.text(DOG_PHOTO_LINK);
@@ -128,9 +129,9 @@ describe('draft mode', () => {
 
     it('can drag', () => {
       const oldPos = b.getLocation('#note1');
-      b.moveToObject('#note1', 10, 10);
+      $('#note1').moveTo(10, 10);
       b.buttonDown(0);
-      b.moveToObject('#note1', 30, 30);
+      $('#note1').moveTo(30, 30);
       b.buttonUp(0);
       const newPosition = b.getLocation('#note1');
 
@@ -144,10 +145,10 @@ describe('draft mode', () => {
       b.keys('Alt');
       b.keys('d');
       b.keys('Alt');
-      b.waitForVisible('#ic-doodle-form');
-      b.moveToObject('#ic-doodle', 155, 75);
+      b.waitForDisplayed('#ic-doodle-form');
+      $('#ic-doodle').moveTo(155, 75);
       b.buttonDown(0);
-      b.moveToObject('#ic-doodle', 255, 175);
+      $('#ic-doodle').moveTo(255, 175);
       b.buttonUp(0);
       b.pause(1000);
       b.click('button[name=draft]');
@@ -159,18 +160,18 @@ describe('draft mode', () => {
     });
 
     it('cannot edit doodle', () => {
-      b.moveToObject('#note2', 10, 10);
+      $('#note2').moveTo(10, 10);
       b.doDoubleClick();
-      b.waitForVisible('#ic-toast span');
+      b.waitForDisplayed('#ic-toast span');
       expect(b.getAttribute('#ic-toast span', 'class')).to.equal('warning');
       expect('#ic-toast span').to.have.text(/Sketches cannot be edited/);
     });
 
     it('can drag', () => {
       const oldPos = b.getLocation('#note2');
-      b.moveToObject('#note2', 10, 10);
+      $('#note2').moveTo(10, 10);
       b.buttonDown(0);
-      b.moveToObject('#note2', 30, 30);
+      $('#note2').moveTo(30, 30);
       b.buttonUp(0);
       const newPosition = b.getLocation('#note2');
 
@@ -181,14 +182,14 @@ describe('draft mode', () => {
 
   it('drafts are saved in local storage', () => {
     b.refresh().pause(5000);
-    b.waitForVisible('.ic-sticky-note');
+    b.waitForDisplayed('.ic-sticky-note');
     expect('.ic-sticky-note').to.have.count(5);
     expect('.draft').to.have.count(3);
   });
 
   describe('submit drafts', () => {
     it('submit text note', () => {
-      b.click('#note0 div.contents button.submit');
+      $('#note0 div.contents button.submit').click();
       b.pause(100);
       expect('.ic-sticky-note').to.have.count(5);
       expect('.draft').to.have.count(2);
@@ -218,25 +219,25 @@ describe('draft mode', () => {
 
       it('cannot select draft in bulk mode', () => {
         b.click('#ic-toast');
-        b.moveToObject('#note4', 50, 50); // drafts come last in bulk mode
+        $('#note4').moveTo(50, 50); // drafts come last in bulk mode
         b.leftClick();
-        b.waitForVisible('#ic-toast');
+        b.waitForDisplayed('#ic-toast');
         expect('#ic-toast').to.have.text(/Cannot select drafts/);
         b.click('#ic-toast');
       });
 
       it('cannot submit drafts in bulk mode', () => {
         b.click('#note4 div.contents button.submit');
-        b.waitForVisible('#ic-toast');
+        b.waitForDisplayed('#ic-toast');
         expect('#ic-toast').to.have.text(/Cannot select drafts/);
       });
     });
 
     it('has correct prompt when deleting draft', () => {
       b.keys(['Shift', '1', 'Shift']); // enter standard mode
-      b.moveToObject('#note0', 164, 2); // delete the doodle
+      $('#note0').moveTo(164, 2); // delete the doodle
       b.leftClick();
-      b.waitForVisible('#ic-modal');
+      b.waitForDisplayed('#ic-modal');
       expect('#ic-modal-body').to.have.text(/discard this draft/);
     });
 

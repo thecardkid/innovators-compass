@@ -20,7 +20,7 @@ describe('forms', () => {
     it('create', () => {
       b.moveToObject('body', 100, 200);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       b.setValue('#ic-form-text .ql-editor', 'text note');
       selectColor('#FFFFCC');
       b.click('button[name=ship]');
@@ -36,7 +36,7 @@ describe('forms', () => {
     it('edit', () => {
       b.moveToObject('#note0', 10, 1);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       expect('#ic-form-text .ql-editor').to.have.text('text note');
       selectColor('#FFCCFF');
       b.setValue('#ic-form-text .ql-editor', 'edited note');
@@ -49,7 +49,7 @@ describe('forms', () => {
     it('edit: can\'t submit empty note', () => {
       b.moveToObject('#note0', 10, 1);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       b.setValue('#ic-form-text .ql-editor', '');
       b.click('button[name=ship]');
       b.pause(200);
@@ -78,7 +78,7 @@ describe('forms', () => {
       b.keys('Shift');
       b.doDoubleClick();
       b.keys('Shift');
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       expect('.ic-form-palette').to.be.visible();
     });
 
@@ -105,7 +105,7 @@ describe('forms', () => {
     it('editing an image without alt text does not show alt text field', () => {
       b.moveToObject('#note1', 10, 1);
       b.doDoubleClick();
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       expect('#ic-image-alt-text').to.not.be.visible();
       b.click('button[name=nvm]');
     });
@@ -113,7 +113,7 @@ describe('forms', () => {
     it('edit', () => {
       b.moveToObject('#note1', 10, 1);
       b.doDoubleClick();
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       expect('.ic-form-palette').to.be.visible();
       expect('#ic-form-text').to.have.text(imageUrl);
       selectColor('#FFCCFF');
@@ -130,7 +130,7 @@ describe('forms', () => {
     it('converts drive link to thumbnail', () => {
       b.moveToObject('#note1', 10, 1);
       b.doDoubleClick();
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       b.setValue('#ic-form-text', driveUrl);
       b.pause(200);
       expect('#ic-form-text').to.have.text(expectedDriveUrl);
@@ -153,7 +153,7 @@ describe('forms', () => {
         b.keys('Shift');
         b.doDoubleClick();
         b.keys('Shift');
-        b.waitForVisible('#ic-image-form');
+        b.waitForDisplayed('#ic-image-form');
         expect('input[name=s3-uploader]').to.be.there();
 
         b.chooseFile('input[name=s3-uploader]', path.join('./test/e2e/files/toolarge.jpg'));
@@ -164,7 +164,7 @@ describe('forms', () => {
 
       it('upload success', () => {
         b.chooseFile('input[name=s3-uploader]', path.join('./test/e2e/files/shouldpass.jpg'));
-        b.waitForVisible('div.preview img');
+        b.waitForDisplayed('div.preview img');
         expect(b.getText('#ic-form-text')).to.include('https://s3.us-east-2.amazonaws.com/innovatorscompass');
         b.click('button[name=nvm]');
       });
@@ -180,7 +180,7 @@ describe('forms', () => {
       b.keys('Alt');
       b.doDoubleClick();
       b.keys('Alt');
-      b.waitForVisible('#ic-doodle-form');
+      b.waitForDisplayed('#ic-doodle-form');
       expect('.ic-form-palette').to.be.visible();
 
       // draw doodle
@@ -204,7 +204,7 @@ describe('forms', () => {
     it('edit', () => {
       b.moveToObject('#note2', 10, 1);
       b.doDoubleClick();
-      b.waitForVisible('#ic-toast');
+      b.waitForDisplayed('#ic-toast');
       expect('#ic-toast').to.have.text(/Sketches cannot be edited/);
       b.click('#ic-toast');
     });
@@ -224,7 +224,7 @@ describe('forms', () => {
     it('text to image', () => {
       b.moveToObject('body', 500, 500);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       expect('.switch-form').to.have.count(2);
       b.click('.switch-image');
       expect('#ic-note-form').to.not.be.visible();
@@ -265,7 +265,7 @@ describe('forms', () => {
     it('switching form maintains note position', () => {
       b.moveToObject('body', 500, 500);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       expect('.switch-form').to.have.count(2);
       b.click('.switch-image');
       b.setValue('#ic-form-text', imageUrl);
@@ -281,7 +281,7 @@ describe('forms', () => {
     it('switching form after changing note color retains that color', () => {
       b.moveToObject('body', 600, 600);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       selectColor('#FFCCFF');
       expect(b.getCssProperty('#ic-form-text', 'background-color').value).to.equal('rgba(255,204,255,1)');
 
@@ -291,7 +291,7 @@ describe('forms', () => {
       b.click('.switch-image');
       expect(b.getCssProperty('#ic-form-text', 'background-color').value).to.equal('rgba(255,204,255,1)');
       b.click('#toggle-alt');
-      b.waitForVisible('#ic-image-alt-text');
+      b.waitForDisplayed('#ic-image-alt-text');
       expect(b.getCssProperty('#ic-image-alt-text', 'background-color').value).to.equal('rgba(255,204,255,1)');
 
       b.setValue('#ic-form-text', imageUrl);
@@ -304,7 +304,7 @@ describe('forms', () => {
     it('editing image does not allow switching', () => {
       b.moveToObject('#note3', 10, 10);
       b.doDoubleClick();
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       expect('.switch-form').to.have.count(0);
       b.click('button[name=nvm]');
     });
@@ -312,7 +312,7 @@ describe('forms', () => {
     it('editing text does not allow switching', () => {
       b.moveToObject('#note0', 10, 10);
       b.doDoubleClick();
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       expect('.switch-form').to.have.count(0);
       b.click('button[name=nvm]');
     });
@@ -321,7 +321,7 @@ describe('forms', () => {
   describe('clicking backdrop closes form', () => {
     it('closes text form', () => {
       b.keys('n');
-      b.waitForVisible('#ic-note-form');
+      b.waitForDisplayed('#ic-note-form');
       b.moveToObject('#ic-note-form', -20, -20);
       b.leftClick();
       expect('#ic-note-form').to.not.be.visible();
@@ -329,7 +329,7 @@ describe('forms', () => {
 
     it('closes image form', () => {
       b.keys('i');
-      b.waitForVisible('#ic-image-form');
+      b.waitForDisplayed('#ic-image-form');
       b.moveToObject('#ic-image-form', -20, -20);
       b.leftClick();
       expect('#ic-image-form').to.not.be.visible();
@@ -337,7 +337,7 @@ describe('forms', () => {
 
     it('closes doodle form', () => {
       b.keys('d');
-      b.waitForVisible('#ic-doodle-form');
+      b.waitForDisplayed('#ic-doodle-form');
       b.moveToObject('#ic-doodle-form', -20, -20);
       b.leftClick();
       expect('#ic-doodle-form').to.not.be.visible();

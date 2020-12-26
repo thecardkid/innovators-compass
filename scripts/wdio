@@ -63,4 +63,7 @@ fi
 
 echo ""
 echo "running webdriverio tests..."
-SPECS="$SPEC_FILE" HEADLESS="$HEADLESS" "$IC_ROOT/node_modules/.bin/wdio" "$IC_ROOT/config/wdio/local.js"
+export NODE_ENV=test
+export SPECS="$SPEC_FILE"
+export HEADLESS="$HEADLESS"
+"$IC_ROOT/node_modules/.bin/wdio" "$IC_ROOT/config/wdio/local.js"
