@@ -1,4 +1,4 @@
-FROM node:8.17.0
+FROM node:14.15.3
 
 WORKDIR /app
 ADD backend/ backend
