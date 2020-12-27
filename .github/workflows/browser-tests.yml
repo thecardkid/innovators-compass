@@ -8,7 +8,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14.15.3'
-      - run: npm install
-      - run: docker-compose -f docker/compose.yml up --detach
-      - run: sleep 20
-      - run: scripts/wdio --with-webpack
+      - uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          headless: true
+          config-file: config/cypress/config.json
