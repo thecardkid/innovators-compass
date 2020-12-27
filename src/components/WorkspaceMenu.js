@@ -22,6 +22,7 @@ import ToastSingleton from '../utils/Toast';
 import * as uiX from '../actions/ui';
 import * as workspaceX from '../actions/workspace';
 import { EDITING_MODE, COLORS, REGEX } from '../../lib/constants';
+import { workspaceMenu } from '../../test/cypress/data_cy';
 
 class WorkspaceMenu extends Component {
   constructor(props) {
@@ -250,11 +251,11 @@ class WorkspaceMenu extends Component {
     return (
       <div className={'ic-menu ic-workspace-menu'}>
         <section className={'border-bottom'} onMouseEnter={this.hideSubmenus}>
-          <div className={'ic-menu-item'} onClick={this.openNewWorkspace}>
+          <div data-cy={workspaceMenu.newWorkspace} className={'ic-menu-item'} onClick={this.openNewWorkspace}>
             <i className={'material-icons'}>create_new_folder</i>
             New Workspace
           </div>
-          <div className={'ic-menu-item'}>
+          <div data-cy={workspaceMenu.darkTheme} className={'ic-menu-item'}>
             <i className={'material-icons'}>brightness_2</i>
             Dark Theme
             <label className={'switch'}>
@@ -264,22 +265,22 @@ class WorkspaceMenu extends Component {
           </div>
         </section>
         <section className={'border-bottom'} onMouseEnter={this.hideSubmenus}>
-          <div className={'ic-menu-item'} onClick={this.triggerEmailModal}>
+          <div data-cy={workspaceMenu.email} className={'ic-menu-item'} onClick={this.triggerEmailModal}>
             <i className={'material-icons'}>email</i>
             Save via Email
           </div>
-          <div className={'ic-menu-item'} onClick={this.bookmark}>
+          <div data-cy={workspaceMenu.bookmark} className={'ic-menu-item'} onClick={this.bookmark}>
             <i className={'material-icons'}>bookmark</i>
             Save as Bookmark
           </div>
-          <div className={'ic-menu-item'} onClick={this.showShareModal}>
+          <div data-cy={workspaceMenu.share} className={'ic-menu-item'} onClick={this.showShareModal}>
             <i className={'material-icons'}>share</i>
             Share Workspace
           </div>
         </section>
         <section className={'border-bottom'}>
           <MaybeTappable onTapOrClick={this.showSubmenu('exports')}>
-            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('exports')}>
+            <div data-cy={workspaceMenu.exportAs} className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('exports')}>
               <i className={'material-icons'}>arrow_right_alt</i>
               Export as
               {exports && <ExportSubmenu uiX={this.props.uiX} hideMenu={this.hideMenu}/>}
@@ -288,36 +289,36 @@ class WorkspaceMenu extends Component {
         </section>
         <section className={'border-bottom'}>
           <MaybeTappable onTapOrClick={this.showSubmenu('resize')}>
-            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('resize')}>
+            <div data-cy={workspaceMenu.moveCenter} className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('resize')}>
               Move Center
               {resize && <ResizeSubmenu uiX={this.props.uiX} hideMenu={this.hideMenu}/>}
             </div>
           </MaybeTappable>
           <MaybeTappable onTapOrClick={this.showSubmenu('notes')}>
-            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('notes')}>
+            <div data-cy={workspaceMenu.notes} className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('notes')}>
               Add Note
               {notes && <NotesSubmenu uiX={this.props.uiX} hideMenu={this.hideMenu}/>}
             </div>
           </MaybeTappable>
           <MaybeTappable onTapOrClick={this.showSubmenu('modes')}>
-            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('modes')}>
+            <div data-cy={workspaceMenu.modes} className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('modes')}>
               Change Mode
               {modes && <ModesSubmenu modes={this.props.modes} changeMode={this.buttonChangeMode} hideMenu={this.hideMenu}/>}
             </div>
           </MaybeTappable>
           <MaybeTappable onTapOrClick={this.showSubmenu('users')}>
-            <div className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('users')}>
+            <div data-cy={workspaceMenu.users} className={'ic-menu-item has-more'} onMouseOver={this.showSubmenu('users')}>
               Collaborators
               {users && this.renderUsersSubmenu()}
             </div>
           </MaybeTappable>
         </section>
         <section onMouseEnter={this.hideSubmenus}>
-          <div className={'ic-menu-item'} onClick={this.logout}>
+          <div data-cy={workspaceMenu.logout} className={'ic-menu-item'} onClick={this.logout}>
             <i className={'material-icons'}>lock</i>
             Log Out
           </div>
-          <div className={'ic-menu-item dangerous'} onClick={this.confirmDelete}>
+          <div data-cy={workspaceMenu.deleteWorkspace} className={'ic-menu-item dangerous'} onClick={this.confirmDelete}>
             <i className={'material-icons'}>delete</i>
             Delete Workspace
           </div>

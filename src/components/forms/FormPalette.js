@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'underscore';
 
 import { STICKY_COLORS } from '../../../lib/constants';
+import { getColorAttr } from '../../../test/cypress/data_cy';
 
 export default class FormPalette extends Component {
   state = {
@@ -23,6 +24,7 @@ export default class FormPalette extends Component {
         <span style={{background: color}}
               key={color}
               onClick={this.setColor(color)}
+              data-cy={getColorAttr(color)}
               className={'ic-color'}
         />
       );

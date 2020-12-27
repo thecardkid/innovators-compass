@@ -10,6 +10,7 @@ const jsxLoader = () => ({
   include: [
     path.resolve(root, 'src'),
     path.resolve(root, 'lib'),
+    path.resolve(root, 'test'),
   ],
   loader: 'babel-loader',
   query: {

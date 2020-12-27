@@ -399,5 +399,4 @@ describe('context menus', () => {
       expect('.ic-sticky-note').to.have.count(0);
     });
   });
-
 });

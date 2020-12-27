@@ -1,0 +1,7 @@
+{
+  "projectId": "jhdg9w",
+  "integrationFolder": "test/cypress/",
+  "screenshotsFolder": "test/cypress/screenshots",
+  "viewportHeight": 1000,
+  "viewportWidth": 1600
+}

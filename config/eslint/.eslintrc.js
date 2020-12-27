@@ -12,6 +12,7 @@ module.exports = {
   globals: {
     __DEV__: true,
     GA_TRACKING_ID: true,
+    cy: true,
   },
   extends: [
     'eslint:recommended',

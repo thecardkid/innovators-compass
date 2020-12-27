@@ -12,6 +12,7 @@ import * as uiX from '../actions/ui';
 import * as workspaceX from '../actions/workspace';
 
 import { COLORS, EDITING_MODE } from '../../lib/constants';
+import { contextMenu } from '../../test/cypress/data_cy';
 
 const VISUAL_MODE_NO_CHANGE = 'You can\'t make changes to individual notes while in bulk edit mode';
 
@@ -343,34 +344,34 @@ class StickyNote extends Component {
     return (
       <div className={'ic-menu context-menu'} style={this.state.contextMenu}>
         <section className={'border-bottom'}>
-          <div className={`ic-menu-item ${disableIfDoodle} ${disableIfBulk}`}
+          <div data-cy={contextMenu.editAction} className={`ic-menu-item ${disableIfDoodle} ${disableIfBulk}`}
                onClick={this.executeThenHide(this.edit)}>
             <i className={'material-icons'}>edit</i>
             Edit
           </div>
-          <div className={`ic-menu-item ${disableIfDraft} ${disableIfBulk}`}
+          <div data-cy={contextMenu.upvoteAction} className={`ic-menu-item ${disableIfDraft} ${disableIfBulk}`}
                onClick={this.executeThenHide(this.upvote)}>
             <i className={'material-icons'}>exposure_plus_1</i>
             Upvote
           </div>
         </section>
         <section className={'border-bottom'}>
-          <div className={`ic-menu-item ${disableIfDoodle}`}
+          <div data-cy={contextMenu.textToSpeechAction} className={`ic-menu-item ${disableIfDoodle}`}
                onClick={this.executeThenHide(this.textToSpeech)}>
             <i className={'material-icons'}>volume_up</i>
             Text to Speech
           </div>
-          <div className={`ic-menu-item ${disableIfText}`}
+          <div data-cy={contextMenu.zoomAction} className={`ic-menu-item ${disableIfText}`}
                onClick={this.executeThenHide(this.showImage)}>
             <i className={'material-icons'}>crop_free</i>
             View {note.doodle ? 'Sketch' : 'Image'}
           </div>
-          <div className={'ic-menu-item'}
+          <div data-cy={contextMenu.bringToFrontAction} className={'ic-menu-item'}
                onClick={this.executeThenHide(this.focus)}>
             <i className={'material-icons'}>flip_to_front</i>
             Bring to Front
           </div>
-          <div className={`ic-menu-item ${disableIfDraft}`}
+          <div data-cy={contextMenu.selectAction} className={`ic-menu-item ${disableIfDraft}`}
                onClick={this.executeThenHide(
                  this.visualMode ? this.selectInVisual : this.selectAndEnterVisual
                )}>
@@ -379,7 +380,7 @@ class StickyNote extends Component {
           </div>
         </section>
         <section>
-          <div className={`ic-menu-item dangerous ${disableIfBulk}`}
+          <div data-cy={contextMenu.discardAction} className={`ic-menu-item dangerous ${disableIfBulk}`}
                onClick={this.executeThenHide(this.confirmDelete)}>
             <i className={'material-icons'}>delete</i>
             {note.draft ? 'Discard' : 'Delete'}

@@ -9,6 +9,7 @@ import MaybeTappable from '../../utils/MaybeTappable';
 import * as uiX from '../../actions/ui';
 
 import { EDITING_MODE } from '../../../lib/constants';
+import { workspaceMenu } from '../../../test/cypress/data_cy';
 
 class ModesSubmenu extends Component {
   constructor() {
@@ -29,21 +30,21 @@ class ModesSubmenu extends Component {
       <div className={'ic-menu ic-modes-submenu'}>
         <section className={'border-bottom'}>
           <MaybeTappable onTapOrClick={this.props.changeMode('standard')}>
-            <div id={'ic-standard'} className={'ic-menu-item'}>
+            <div data-cy={workspaceMenu.modesSubactions.standard} id={'ic-standard'} className={'ic-menu-item'}>
               <span className={normal ? 'active' : 'inactive'} />
               Standard
               <span className={'ic-shortcut'}>shift+1</span>
             </div>
           </MaybeTappable>
           <MaybeTappable onTapOrClick={this.props.changeMode('compact')}>
-            <div id={'ic-compact'} className={'ic-menu-item'}>
+            <div data-cy={workspaceMenu.modesSubactions.compact} id={'ic-compact'} className={'ic-menu-item'}>
               <span className={compact ? 'active' : 'inactive'} />
               Compact
               <span className={'ic-shortcut'}>shift+2</span>
             </div>
           </MaybeTappable>
           <MaybeTappable onTapOrClick={this.props.changeMode('bulk')}>
-            <div id={'ic-bulk'} className={'ic-menu-item'}>
+            <div data-cy={workspaceMenu.modesSubactions.bulk} id={'ic-bulk'} className={'ic-menu-item'}>
               <span className={bulk ? 'active' : 'inactive'} />
               Bulk Edit
               <span className={'ic-shortcut'}>shift+click</span>
@@ -51,7 +52,7 @@ class ModesSubmenu extends Component {
           </MaybeTappable>
         </section>
         <section>
-          <div className={'ic-menu-item'} onClick={this.alertExplainModes}>
+          <div data-cy={workspaceMenu.modesSubactions.explain} className={'ic-menu-item'} onClick={this.alertExplainModes}>
             <span className={'inactive'} />
             What are these?
           </div>
