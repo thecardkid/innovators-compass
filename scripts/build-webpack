@@ -2,5 +2,5 @@
 set -euo pipefail
 . "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh"
 
-"$IC_ROOT/node_modules/.bin/webpack" --config "$IC_ROOT/config/webpack/prod.js"
+"$IC_ROOT/node_modules/.bin/webpack" --config "$IC_ROOT/config/webpack/vendor.js"
 "$IC_ROOT/node_modules/.bin/webpack" --config "$IC_ROOT/config/webpack/prod.js"

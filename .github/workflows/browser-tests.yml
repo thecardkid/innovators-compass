@@ -1,15 +1,14 @@
-name: webdriver-tests
+name: browser-tests
 on: push
 jobs:
   webdriver-tests:
-    runs-on: macos-10.15
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '14.15.3'
-      - uses: cypress-io/github-action@v2
-        with:
-          browser: chrome
-          headless: true
-          config-file: config/cypress/config.json
+      - run: npm install
+      - run: NODE_ENV=production scripts/build-webpack
+      - run: NODE_ENV=test node backend/server &
+      - run: npm run cy-run

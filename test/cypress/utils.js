@@ -5,7 +5,7 @@ function waitForVisible(selector) {
 }
 
 function setup() {
-  cy.visit('http://localhost:8080');
+  cy.visit('/');
   // TODO compass-center is legacy (from before "topic" existed).
   // Rename to compass-topic
   cy.get('#compass-center').type('webdriverio');

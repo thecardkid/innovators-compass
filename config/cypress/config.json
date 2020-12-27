@@ -1,7 +1,19 @@
 {
   "projectId": "jhdg9w",
+
+  "baseUrl": "http://localhost:8080",
+  "viewportHeight": 1000,
+  "viewportWidth": 1600,
+  "waitForAnimations": true,
+
+  "ignoreTestFiles": [
+    "**/__snapshots__/*",
+    "**/__image_snapshots__/*"
+  ],
+  "testFiles": "*.spec.js",
+  "pluginsFile": "config/cypress/plugins.js",
+  "supportFile": "config/cypress/support.js",
   "integrationFolder": "test/cypress/",
   "screenshotsFolder": "test/cypress/screenshots",
-  "viewportHeight": 1000,
-  "viewportWidth": 1600
+  "videosFolder": "test/cypress/videos"
 }

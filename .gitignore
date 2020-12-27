@@ -13,6 +13,8 @@ bundle.js.gz
 main.css
 main.css.map
 
+test/cypress/videos
+
 backend/website-dist/*.js
 
 .ctagsignore
